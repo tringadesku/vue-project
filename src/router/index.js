@@ -14,6 +14,12 @@ import ViewClientProfile from "@/components/ClientDetails/ViewClientProfile.vue"
 import ListClientDetails from "@/components/Admin/ListClientDetails.vue";
 import AllClients from "@/components/ClientDetails/AllClients.vue";
 
+import CreateFreelancerDetail from "@/components/FreelancerDetails/CreateFreelancerDetail.vue";
+import EditFreelancerDetail from "@/components/FreelancerDetails/EditFreelancerDetail.vue";
+import FreelancerProfile from "@/components/FreelancerDetails/FreelancerProfile.vue";
+import ViewFreelancerProfile from "@/components/FreelancerDetails/ViewFreelancerProfile.vue";
+import AllFreelancers from "@/components/FreelancerDetails/AllFreelancers.vue";
+
 import CreateCategory from "@/components/Admin/CreateCategory.vue"
 import EditCategory from "@/components/Admin/EditCategory.vue"
 import ListCategories from "@/components/Admin/ListCategories.vue"
@@ -121,7 +127,31 @@ const routes = [
     name: "login",
     component: LoginComp,
   },
-
+  {
+    path: "/createFreelancerDetail",
+    name: "createFreelancerDetail",
+    component: CreateFreelancerDetail,
+  },
+  {
+    path: "/editFreelancerDetail",
+    name: "EditFreelancerDetail",
+    component: EditFreelancerDetail,
+  },
+  {
+    path: "/freelancerprofile",
+    name: "FreelancerProfile",
+    component: FreelancerProfile,
+  },
+  {
+    path: "/viewfreelancerprofile",
+    name: "ViewFreelancerProfile",
+    component: ViewFreelancerProfile,
+  },
+  {
+    path: "/freelancers",
+    name: "Freelancers",
+    component: AllFreelancers,
+  },
 ];
 
 const router = createRouter({

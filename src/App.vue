@@ -18,7 +18,10 @@
               <span class="nav-link active px-3">{{ user.email }} </span>
             </li>
             <li v-if="user" class="nav-item">
-              <router-link to="/clientProfile" class="btn btn-light px-3 mx-3">Profile</router-link>
+              <router-link to="/clientProfile" class="btn btn-light px-3 mx-3">Client Profile</router-link>
+            </li>
+            <li v-if="user" class="nav-item">
+              <router-link to="/freelancerProfile" class="btn btn-light px-3 mx-3">Freelancer Profile</router-link>
             </li>
             <li v-if="user" class="nav-item">
               <button class="btn btn-danger px-3" @click="handleClick">Logout</button>
