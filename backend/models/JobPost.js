@@ -17,7 +17,10 @@ let jobPostSchema = new Schema({
     jobCategory: {
       type: String
     },
-    jobClient: {
+    clientId: {
+      type: String
+    },
+    clientName: {
       type: String
     }
 }, {

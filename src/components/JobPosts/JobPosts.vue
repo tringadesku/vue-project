@@ -1,5 +1,8 @@
 <template>
   <div class="justify-content-center">
+
+    <h3>Search JobPosts:</h3>
+    <input v-model="searchQuery" @input="searchJobPosts()" type="text" placeholder="Search job posts...">
       <!-- Display jobpost list -->
       <h1>Show JobPosts</h1>
       <div class="row">
@@ -14,9 +17,7 @@
                               <th>Job Application Deadline</th>
                               <th>Job Category</th>
                               <th>Job Client</th>
-                              <th>
-                                <router-link to="/createJobPost" class="btn btn-secondary px-3">Create JobPost</router-link>
-                              </th>
+                              <th></th>
                           </tr>
                       </thead>
                       <tbody>
@@ -26,16 +27,9 @@
                               <td>{{ jobpost.jobPostDescription }}</td>
                               <td>{{ jobpost.jobApplicationDeadline }}</td>
                               <td>{{ jobpost.jobCategory }}</td>
-                              <td>{{ jobpost.jobClient }}</td>
+                              <td>{{ jobpost.clientName }}</td>
                               <td>
-                                  <router-link :to="{name: 'edit', params: {id: jobpost._id}}"
-                                  class="btn btn-success me-2">
-                                      Edit
-                                  </router-link>
-                                  <button @click.prevent="deleteJobPost(jobpost._id)"
-                                  class="btn btn-danger">
-                                      Delete
-                                  </button>
+                                <button>Apply</button>
                               </td>
                           </tr>
                       </tbody>
@@ -64,18 +58,16 @@ export default {
       })
   },
   methods: {
-      deleteJobPost(id) {
-          let apiURL = `http://localhost:4000/api/delete-jobpost/${id}`;
-          let indexOfArrayItem = this.JobPosts.findIndex(i => i._id === id);
-
-          if (window.confirm("Do you really want to delete?")) {
-              axios.delete(apiURL).then(() => {
-                  this.JobPosts.splice(indexOfArrayItem, 1)
-              }).catch(error => {
-                  console.log(error)
-              })
-          }
-      }
+    searchJobPosts() {
+      axios.get(`http://localhost:4000/api/search-jobPosts/${this.searchQuery}`)
+        .then(response => {
+          this.JobPosts = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   }
+  
 }
 </script>

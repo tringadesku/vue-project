@@ -20,6 +20,8 @@ const store = createStore({
   mutations: {
     setUser(state, payload) {
       state.user = payload
+      localStorage.setItem('userId', state.user.uid)
+      localStorage.setItem('userRole', state.userRole)
       console.log('user state changed:', state.user)
 
       // Get user's data from Firestore collection
@@ -81,6 +83,8 @@ const store = createStore({
     },
     async logout(context) {
       console.log('logout action')
+      localStorage.removeItem('userId')
+      localStorage.removeItem('userRole')
 
       await signOut(auth)
       context.commit('setUser', null)

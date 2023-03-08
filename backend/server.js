@@ -19,6 +19,8 @@ mongoose.connect(database.db, {
 
 const studentAPI = require('./routes/student.route');
 const jobPostAPI = require('./routes/jobPost.route');
+const categoriesAPI = require('./routes/category.route');
+const clientDetailAPI = require('./routes/clientDetail.route');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -28,8 +30,11 @@ app.use(bodyParser.urlencoded({
 // Cors
 app.use(cors());
 
+// Serve static files from the "public" directory
+app.use(express.static('public'));
+
 // API
-app.use('/api', studentAPI, jobPostAPI);
+app.use('/api', studentAPI, jobPostAPI, categoriesAPI, clientDetailAPI);
 
 // CREATE PORT
 const port = process.env.PORT || 4000;

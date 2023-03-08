@@ -6,10 +6,7 @@
           <router-link to="/" class="navbar-brand float-left">JobMatch</router-link>
           <ul class="nav navbar-nav flex-row float-right">
             <li v-if="user" class="nav-item">
-              <router-link to="/listJobPosts" class="nav-link px-3">JobPosts</router-link>
-            </li>
-            <li  v-if="user" class="nav-item">
-              <router-link to="/view" class="nav-link px-3">Students</router-link>
+              <router-link to="/jobposts" class="nav-link px-3">JobPosts</router-link>
             </li>
             <li v-if="!user" class="nav-item">
               <router-link to="/signup" class="nav-link px-3">Sign Up</router-link>
@@ -18,10 +15,13 @@
               <router-link to="/login" class="nav-link px-3">Log In</router-link>
             </li>
             <li v-if="user" class="nav-item">
-              <span class="nav-link active px-3">Logged in as {{ user.email }}</span>
+              <span class="nav-link active px-3">{{ user.email }} </span>
             </li>
             <li v-if="user" class="nav-item">
-              <button class="btn btn-light px-3" @click="handleClick">Logout</button>
+              <router-link to="/clientProfile" class="btn btn-light px-3 mx-3">Profile</router-link>
+            </li>
+            <li v-if="user" class="nav-item">
+              <button class="btn btn-danger px-3" @click="handleClick">Logout</button>
             </li>
           </ul>
         </div>

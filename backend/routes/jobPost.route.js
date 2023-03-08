@@ -1,7 +1,8 @@
 const express = require('express');
 const jobPostRoute = express.Router();
 
-// Student model
+
+// JobPost model
 let JobPostModel = require('../models/JobPost');
 
 // Get all data
@@ -15,7 +16,41 @@ jobPostRoute.route('/getJobs').get((req, res, next) => {
     })
 })
 
-// Create student data
+// Search job post
+jobPostRoute.route('/search-jobPosts/:query').get((req, res, next) => {
+    const query = req.params.query;
+  
+    JobPostModel.find({
+      $or: [
+        { jobPostName: { $regex: query, $options: 'i' } },
+        { jobPostDescription: { $regex: query, $options: 'i' } },
+        { jobCategory: { $regex: query, $options: 'i' } },
+        { clientName: { $regex: query, $options: 'i' } },
+      ]
+    }, (error, data) => {
+      if (error) {
+        return next(error);
+      } else {
+        res.json(data);
+      }
+    });
+  });
+  
+// Get by client id
+jobPostRoute.route('/getMyJobs').get((req, res, next) => {
+    const clientId = req.query.clientId // Get the user ID from the query parameter
+  
+    JobPostModel.find({ clientId: clientId }, (error, data) => {
+      if (error) {
+        return next(error)
+      } else {
+        res.json(data)
+      }
+    })
+  })
+  
+
+// Create Job Post
 jobPostRoute.route('/create-jobPost').post((req, res, next) => {
   JobPostModel.create(req.body, (error, data) => {
         if (error) {
@@ -26,7 +61,7 @@ jobPostRoute.route('/create-jobPost').post((req, res, next) => {
     })
 })
 
-// Edit student data
+// Edit jobpost data
 jobPostRoute.route('/edit-jobPost/:id').get((req, res, next) => {
   JobPostModel.findById(req.params.id, (error, data) => {
         if (error) {
@@ -37,7 +72,7 @@ jobPostRoute.route('/edit-jobPost/:id').get((req, res, next) => {
     })
 })
 
-// Update student data
+// Update jobpost data
 jobPostRoute.route('/update-jobPost/:id').put((req, res, next) => {
     JobPostModel.findByIdAndUpdate(req.params.id, {
         $set: req.body
@@ -51,7 +86,7 @@ jobPostRoute.route('/update-jobPost/:id').put((req, res, next) => {
     })
 })
 
-// Delete student data
+// Delete jobpost data
 jobPostRoute.route('/delete-jobPost/:id').delete((req, res, next) => {
     JobPostModel.findByIdAndDelete(req.params.id, (error, data) => {
         if (error) {

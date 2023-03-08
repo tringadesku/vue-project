@@ -1,10 +1,10 @@
 <template>
   <div class="row justify-content-center">
       <div class="col-md-6">
-          <!-- Content goes here -->
-          <h1>Create JobPosts</h1>
-          <form @submit.prevent="handleSubmitForm">
-              <div class="form-group">
+          <!-- edit here -->
+          <h1>Edit Job Post</h1>
+          <form @submit.prevent="handleUpdateForm">
+            <div class="form-group">
                   <label for="jobPostName">Job Name: </label>
                   <input type="text" class="form-control" v-model="jobPost.jobPostName" required>
               </div>
@@ -27,8 +27,8 @@
                 </select>
               </div>
               <div class="form-group" hidden>
-                  <label for="jobClient">jobClient:</label>
-                  <input type="text" class="form-control" v-model="jobPost.clientId">
+                  <label for="jobClient">clientId:</label>
+                  <input type="text" class="form-control" v-model="jobPost.clientId" required>
               </div>
 
               <div class="form-group" hidden>
@@ -37,34 +37,29 @@
               </div>
 
               <div class="form-group mt-3">
-                  <button class="btn btn-success btn-block w-100" type="submit">Create</button>
+                  <button class="btn btn-success btn-block w-100" type="submit">Edit</button>
               </div>
-
           </form>
       </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-var clientId = localStorage.getItem('userId')
+import axios from "axios";
 
 export default {
   data() {
       return {
-          jobPost: {
-            jobPostName: '',
-            jobPostBudget: '',
-            jobPostDescription: '',
-            jobApplicationDeadline: '',
-            jobCategory: '',
-            clientId: localStorage.getItem('userId'),
-            clientName: ''
-          },
-          categories: [],
+          jobPost: {},
+          categories: []
       }
   },
   created() {
+      let apiURL = `http://localhost:4000/api/edit-jobPost/${this.$route.params.id}`;
+      axios.get(apiURL).then((res) => {
+          this.jobPost = res.data
+      })
+
       let categoriesURL= 'http://localhost:4000/api/getCategories';
       axios.get(categoriesURL).then(res => {
           this.categories = res.data
@@ -72,45 +67,18 @@ export default {
       }).catch(error => {
           console.log(error)
       })
-
-      let clientdet = 'http://localhost:4000/api/getMyClientDetails';
-      axios.get(clientdet, { params: { clientId } })
-      .then(response => {
-        console.log(response.data)
-        this.jobPost.clientName = response.data.at(0).firstName + " " + response.data.at(0).lastName + " - " + response.data.at(0).companyName
-        // Handle the response data here
-      })
-      .catch(error => {
-        console.log(error)
-      })
+  
   },
   methods: {
-      handleSubmitForm() {
-          let apiURL = 'http://localhost:4000/api/create-jobPost';
+      handleUpdateForm() {
+          let apiURL = `http://localhost:4000/api/update-jobPost/${this.$route.params.id}`;
 
-          axios.post(apiURL, this.jobPost).then(() => {
-              this.$router.push('/clientprofile');
-              this.jobPost = {
-            jobPostName: '',
-            jobPostBudget: '',
-            jobPostDescription: '',
-            jobApplicationDeadline: '',
-            jobCategory: '',
-            clientId: '',
-            clientName: ''
-          }
+          axios.put(apiURL, this.jobPost).then((res) => {
+              console.log(res)
+              this.$router.push('/listjobposts')
           }).catch(error => {
-              console.log(error);
+              console.log(error)
           })
-      },
-      isNumber: function(evt) {
-          evt = (evt) ? evt : window.event;
-          var charCode = (evt.which) ? evt.which : evt.keyCode;
-          if ((charCode > 31 && (charCode < 48 || charCode > 57))) {
-              evt.preventDefault();
-          } else {
-              return true;
-          }
       }
   }
 }
