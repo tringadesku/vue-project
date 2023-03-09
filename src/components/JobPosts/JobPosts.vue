@@ -43,10 +43,13 @@
 <script>
 import axios from "axios";
 
+var freelancerId = localStorage.getItem('userId')
+
 export default {
   data() {
       return {
           JobPosts: []
+
       }
   },
   created() {
@@ -56,6 +59,35 @@ export default {
       }).catch(error => {
           console.log(error)
       })
+
+      var sugcat = ''
+
+      let apiiURL = 'http://localhost:4000/api/getMyFreelancerDetails';
+      axios.get(apiiURL, { params: { freelancerId } })
+      .then(response => {
+        console.log(response.data)
+        var freelancerdetails = response.data
+        sugcat = freelancerdetails.at(0).jobCategory
+        // Handle the response data here
+      })
+      .catch(error => {
+        console.log(error)
+      })
+      
+      let jobsURL = 'http://localhost:4000/api/getSuggestedJobs';
+      axios.get(jobsURL, { params: { sugcat } })
+      .then(response => {
+        console.log("yllkaaaa" + response.data)
+     //   this.JobPosts = response.data
+        // Handle the response data here
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+
+
+
   },
   methods: {
     searchJobPosts() {

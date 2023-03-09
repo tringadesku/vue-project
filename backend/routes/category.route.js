@@ -25,7 +25,6 @@ categoryRoute.route('/create-category').post((req, res, next) => {
         }
     })
 })
-
 // Edit student data
 categoryRoute.route('/edit-category/:id').get((req, res, next) => {
   CategoryModel.findById(req.params.id, (error, data) => {

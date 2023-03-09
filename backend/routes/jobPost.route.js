@@ -36,6 +36,7 @@ jobPostRoute.route('/search-jobPosts/:query').get((req, res, next) => {
     });
   });
   
+  
 // Get by client id
 jobPostRoute.route('/getMyJobs').get((req, res, next) => {
     const clientId = req.query.clientId // Get the user ID from the query parameter
@@ -98,5 +99,18 @@ jobPostRoute.route('/delete-jobPost/:id').delete((req, res, next) => {
         }
     })
 })
+
+jobPostRoute.route('/getSuggestedJobs').get((req, res, next) => {
+  const jobCategory = req.query.jobCategory // Get the user ID from the query parameter
+
+  JobPostModel.find({ jobCategory: jobCategory }, (error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      res.json(data)
+    }
+  })
+})
+
 
 module.exports = jobPostRoute;
