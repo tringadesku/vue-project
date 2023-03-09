@@ -32,6 +32,7 @@ const store = createStore({
             // Extract user's role from data
             state.userRole = doc.data().role;
             console.log('user role:', state.userRole);
+            localStorage.setItem('userRole', state.userRole)
           } else {
             console.log('user not found');
           }
