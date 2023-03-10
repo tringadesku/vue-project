@@ -69,6 +69,19 @@ freelancerDetailRoute.route('/getMyFreelancerDetails').get((req, res, next) => {
   })
 })
 
+// Get by freelancer category
+freelancerDetailRoute.route('/getFreelancersByCategory').get((req, res, next) => {
+  const jobCategory = req.query.jobCategory // Get the user ID from the query parameter
+
+  FreelancerDetailModel.find({ jobCategory: jobCategory }, (error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      res.json(data)
+    }
+  })
+})
+
 
 // Create student data
 freelancerDetailRoute.route('/create-freelancerDetail').post(upload.single('profileImg'), (req, res, next) => {

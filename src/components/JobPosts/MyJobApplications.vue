@@ -1,10 +1,8 @@
 <template>
   <div class="justify-content-center">
 
-    <h3>Search JobPosts:</h3>
-    <input v-model="searchQuery" @input="searchJobPosts()" type="text" placeholder="Search job posts...">
       <!-- Display jobpost list -->
-      <h1>Show JobPosts</h1>
+      <h1>Show My Job Applications:</h1>
       <div class="row">
           <div class="col-md-12">
               <div class="table-responsive">
@@ -21,7 +19,7 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr v-for="jobpost in JobPosts" :key="jobpost._id">
+                          <tr v-for="jobpost in filteredJobPosts" :key="jobpost._id">
                               <td>{{ jobpost.jobPostName }}</td>
                               <td>{{ jobpost.jobPostBudget }}€</td>
                               <td>{{ jobpost.jobPostDescription }}</td>
@@ -31,33 +29,6 @@
                               <td>
                                 <button v-if="userRole == 'Freelancer' &&  hasApplied(jobpost._id)" @click="unapply(jobpost._id)">Unapply</button>
                                 <button v-if="userRole == 'Freelancer' &&  !hasApplied(jobpost._id)" @click="applyJobPost(jobpost._id)">Apply</button>
-                              </td>
-                          </tr>
-                      </tbody>
-                  </table>
-                  <table class="table table-striped">
-                      <thead class="table-dark">
-                          <tr>
-                              <th>Job Post Name</th>
-                              <th>Job Post Budget</th>
-                              <th>Job Post Description</th>
-                              <th>Job Application Deadline</th>
-                              <th>Job Category</th>
-                              <th>Job Client</th>
-                              <th></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr v-for="job in SuggestedJobPosts" :key="job._id">
-                              <td>{{ job.jobPostName }}</td>
-                              <td>{{ job.jobPostBudget }}€</td>
-                              <td>{{ job.jobPostDescription }}</td>
-                              <td>{{ job.jobApplicationDeadline }}</td>
-                              <td>{{ job.jobCategory }}</td>
-                              <td>{{ job.clientName }}</td>
-                              <td>
-                                <button v-if="userRole == 'Freelancer' &&  hasApplied(job._id)" @click="unapply(job._id)">Unapply</button>
-                                <button v-if="userRole == 'Freelancer' &&  !hasApplied(job._id)" @click="applyJobPost(job._id)">Apply</button>
                               </td>
                           </tr>
                       </tbody>
@@ -77,7 +48,6 @@ export default {
   data() {
       return {
           JobPosts: [],
-          SuggestedJobPosts: [],
           JobApplications: [],
           userRole: localStorage.getItem('userRole')
 
@@ -104,43 +74,15 @@ export default {
       })
 
 
-      //get suggested jobposts by category
-      var jobCategory = ''
-
-      let apiiURL = 'http://localhost:4000/api/getMyFreelancerDetails';
-      axios.get(apiiURL, { params: { freelancerId } })
-      .then(response => {
-        console.log(response.data)
-        var freelancerdetails = response.data
-        jobCategory = freelancerdetails.at(0).jobCategory
-        console.log(jobCategory)
-
-        let jobsURL = 'http://localhost:4000/api/getSuggestedJobs';
-        axios.get(jobsURL, { params: { jobCategory } })
-          .then(response => {
-            console.log(response.data)
-            this.SuggestedJobPosts = response.data
-          })
-          .catch(error => {
-            console.log(error)
-          })
-      })
-      .catch(error => {
-        console.log(error)
-      })
-
-
   },
+  computed: {
+  filteredJobPosts() {
+    return this.JobPosts.filter(jobpost => {
+      return this.JobApplications.some(jobApp => jobApp.jobId === jobpost._id)
+    })
+  }
+},
   methods: {
-    searchJobPosts() {
-      axios.get(`http://localhost:4000/api/search-jobPosts/${this.searchQuery}`)
-        .then(response => {
-          this.JobPosts = response.data;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
 
     applyJobPost(jobId) {
       let freelancerId = localStorage.getItem('userId');

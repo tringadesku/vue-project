@@ -69,6 +69,14 @@
                                   class="btn btn-success me-2">
                                       Edit
                                   </router-link>
+                                  <router-link :to="{name: 'JobApplicants', params: {id: jobpost._id}}"
+                                  class="btn btn-primary me-2">
+                                      View Applicants
+                                  </router-link>
+                                  <router-link :to="{name: 'SuggestedFreelancers', params: {jobCategory: jobpost.jobCategory}}"
+                                  class="btn btn-primary me-2">
+                                       Suggested Freelancers
+                                  </router-link>
                                   <button @click.prevent="deleteJobPost(jobpost._id)"
                                   class="btn btn-danger">
                                       Delete

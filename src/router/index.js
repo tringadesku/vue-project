@@ -4,6 +4,8 @@ import CreateJobPost from "@/components/JobPosts/CreateJobPost.vue";
 import EditJobPost from "@/components/JobPosts/EditJobPost.vue";
 import ListJobPosts from "@/components/Admin/ListJobPosts.vue";
 import MyJobPosts from "@/components/JobPosts/MyJobPosts.vue";
+import JobApplicants from "@/components/JobPosts/JobApplicants.vue";
+import MyJobApplications from "@/components/JobPosts/MyJobApplications.vue";
 import JobPosts from "@/components/JobPosts/JobPosts.vue";
 import TestComp from "@/components/TestComp.vue";
 
@@ -19,6 +21,7 @@ import EditFreelancerDetail from "@/components/FreelancerDetails/EditFreelancerD
 import FreelancerProfile from "@/components/FreelancerDetails/FreelancerProfile.vue";
 import ViewFreelancerProfile from "@/components/FreelancerDetails/ViewFreelancerProfile.vue";
 import AllFreelancers from "@/components/FreelancerDetails/AllFreelancers.vue";
+import SuggestedFreelancers from "@/components/FreelancerDetails/SuggestedFreelancers.vue";
 
 import CreateCategory from "@/components/Admin/CreateCategory.vue"
 import EditCategory from "@/components/Admin/EditCategory.vue"
@@ -71,6 +74,11 @@ const routes = [
     component: ListClientDetails,
   },
   {
+    path: "/suggestedFreelancers",
+    name: "SuggestedFreelancers",
+    component: SuggestedFreelancers,
+  },
+  {
     path: "/createjobpost",
     name: "CreateJobPost",
     component: CreateJobPost,
@@ -86,6 +94,18 @@ const routes = [
     path: "/myJobPosts",
     name: "MyJobPosts",
     component: MyJobPosts,
+    //meta: { requiresAuth: true }
+  },
+  {
+    path: "/myjobapplications",
+    name: "MyJobApplications",
+    component: MyJobApplications,
+    //meta: { requiresAuth: true }
+  },
+  {
+    path: "/jobApplicants",
+    name: "JobApplicants",
+    component: JobApplicants,
     //meta: { requiresAuth: true }
   },
   {

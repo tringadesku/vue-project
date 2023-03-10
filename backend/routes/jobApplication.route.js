@@ -39,6 +39,19 @@ jobApplicationRoute.route('/getMyJobApplications').get((req, res, next) => {
   })
 })
 
+//get by job Id
+jobApplicationRoute.route('/getByJobId').get((req, res, next) => {
+  const jobId = req.query.jobId // Get the user ID from the query parameter
+
+  JobApplicationModel.find({ jobId: jobId }, (error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      res.json(data)
+    }
+  })
+})
+
 //get by job Id and freelancerId
 jobApplicationRoute.route('/getJobApplication').get((req, res, next) => {
   const freelancerId = req.query.freelancerId
@@ -53,6 +66,7 @@ jobApplicationRoute.route('/getJobApplication').get((req, res, next) => {
   })
 })
 
+//apply for job
 jobApplicationRoute.post('/apply', (req, res) => {
   const { freelancerId, jobId } = req.body;
   const newJobApplication = new JobApplicationModel({
