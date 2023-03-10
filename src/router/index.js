@@ -27,6 +27,10 @@ import CreateCategory from "@/components/Admin/CreateCategory.vue"
 import EditCategory from "@/components/Admin/EditCategory.vue"
 import ListCategories from "@/components/Admin/ListCategories.vue"
 
+import CreateCity from "@/components/Admin/CreateCity.vue"
+import EditCity from "@/components/Admin/EditCity.vue"
+import ListCities from "@/components/Admin/ListCities.vue"
+
 import HomeComp from '../views/HomeComp.vue'
 import SignUp from '../views/SignUp.vue'
 import LoginComp from '../views/LoginComp.vue'
@@ -135,6 +139,24 @@ const routes = [
     path: "/categories",
     name: "categories",
     component: ListCategories,
+    //meta: { requiresAuth: true }
+  },
+  {
+    path: "/createCity",
+    name: "CreateCity",
+    component: CreateCity,
+    //meta: { requiresAuth: true }
+  },
+  {
+    path: "/editCity",
+    name: "EditCity",
+    component: EditCity,
+    //meta: { requiresAuth: true }
+  },
+  {
+    path: "/cities",
+    name: "cities",
+    component: ListCities,
     //meta: { requiresAuth: true }
   },
   {

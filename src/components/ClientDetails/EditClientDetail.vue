@@ -22,9 +22,11 @@
         <label for="position">Position:</label>
         <input type="text" id="position" v-model="clientDetail.position" required>
       </div>
-      <div>
-        <label for="city">City:</label>
-        <input type="text" id="city" v-model="clientDetail.city" required>
+      <div class="form-group">
+                <label for="city">City:</label>
+                <select v-model="clientDetail.city">
+                <option v-for="city in cities" :key="city._id" :value="city.city">{{ city.city }}</option>
+                </select>
       </div>
       <div>
         <label for="description">Description:</label>
@@ -46,13 +48,21 @@ import axios from "axios";
 export default {
   data() {
       return {
-          clientDetail: {}
+          clientDetail: {},
+          cities: []
       }
   },
   created() {
       let apiURL = `http://localhost:4000/api/edit-clientDetail/${this.$route.params.id}`;
       axios.get(apiURL).then((res) => {
           this.clientDetail = res.data
+      })
+
+      let citiesURL= 'http://localhost:4000/api/getCities';
+      axios.get(citiesURL).then(res => {
+          this.cities = res.data
+      }).catch(error => {
+          console.log(error)
       })
   },
   methods: {

@@ -20,16 +20,18 @@
         <label for="lastName">Last Name:</label>
         <input type="text" id="lastName" v-model="form.lastName" required>
       </div>
-      <div>
-        <label for="city">City:</label>
-        <input type="text" id="city" v-model="form.city" required>
+      <div class="form-group">
+                <label for="city">City:</label>
+                <select v-model="form.city">
+                <option v-for="city in cities" :key="city._id" :value="city.city">{{ city.city }}</option>
+                </select>
       </div>
         <div class="form-group">
                 <label for="jobCategory">Category:</label>
                 <select v-model="form.jobCategory">
                 <option v-for="category in categories" :key="category._id" :value="category.categoryName">{{ category.categoryName }}</option>
                 </select>
-              </div>
+      </div>
       <div>
         <label for="education">Education:</label>
         <textarea id="education" v-model="form.education" required></textarea>
@@ -73,6 +75,7 @@ export default {
       },
 
          categories: [],
+         cities: []
     }
   },
   created() {
@@ -91,6 +94,13 @@ export default {
       axios.get(categoriesURL).then(res => {
           this.categories = res.data
           console.log(this.categories)
+      }).catch(error => {
+          console.log(error)
+      })
+
+      let citiesURL= 'http://localhost:4000/api/getCities';
+      axios.get(citiesURL).then(res => {
+          this.cities = res.data
       }).catch(error => {
           console.log(error)
       })

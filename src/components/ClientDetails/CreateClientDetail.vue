@@ -28,9 +28,11 @@
         <label for="position">Position:</label>
         <input type="text" id="position" v-model="form.position" required>
       </div>
-      <div>
-        <label for="city">City:</label>
-        <input type="text" id="city" v-model="form.city" required>
+      <div class="form-group">
+                <label for="jobCategory">City:</label>
+                <select v-model="form.city">
+                <option v-for="city in cities" :key="city._id" :value="city.city">{{ city.city }}</option>
+                </select>
       </div>
       <div>
         <label for="description">Description:</label>
@@ -63,7 +65,8 @@ export default {
         city: '',
         description: '',
         profileImg: null
-      }
+      },
+      cities: []
     }
   },
   created() {
@@ -77,6 +80,13 @@ export default {
   .catch(error => {
     console.log(error)
   })
+
+  let citiesURL= 'http://localhost:4000/api/getCities';
+      axios.get(citiesURL).then(res => {
+          this.cities = res.data
+      }).catch(error => {
+          console.log(error)
+      })
   },
   methods: {
     onFileChange(event) {
