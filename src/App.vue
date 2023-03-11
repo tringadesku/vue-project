@@ -17,10 +17,10 @@
             <li v-if="user" class="nav-item">
               <span class="nav-link active px-3">{{ user.email }} </span>
             </li>
-            <li v-if="user" class="nav-item">
+            <li v-if="user && userRole == 'Client'" class="nav-item">
               <router-link to="/clientProfile" class="btn btn-light px-3 mx-3">Client Profile</router-link>
             </li>
-            <li v-if="user" class="nav-item">
+            <li v-if="user && userRole == 'Freelancer'" class="nav-item">
               <router-link to="/freelancerProfile" class="btn btn-light px-3 mx-3">Freelancer Profile</router-link>
             </li>
             <li v-if="user" class="nav-item">
@@ -45,6 +45,11 @@ import { useStore } from 'vuex'
 import { computed } from 'vue'
 
 export default {
+  data(){
+    return{
+      userRole: localStorage.getItem('userRole')
+    }
+  },
   setup() {
     const store = useStore()
 

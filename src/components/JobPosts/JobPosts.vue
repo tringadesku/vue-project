@@ -18,6 +18,7 @@
                               <th>Job Category</th>
                               <th>Job Client</th>
                               <th></th>
+                              <th></th>
                           </tr>
                       </thead>
                       <tbody>
@@ -29,35 +30,14 @@
                               <td>{{ jobpost.jobCategory }}</td>
                               <td>{{ jobpost.clientName }}</td>
                               <td>
+                                <router-link :to="{name: 'ViewClientProfile', params: {id: jobpost.clientId}}"
+                                  class="btn btn-success me-2">
+                                      View Client Profile
+                                  </router-link>
+                              </td>
+                              <td>
                                 <button v-if="userRole == 'Freelancer' &&  hasApplied(jobpost._id)" @click="unapply(jobpost._id)">Unapply</button>
                                 <button v-if="userRole == 'Freelancer' &&  !hasApplied(jobpost._id)" @click="applyJobPost(jobpost._id)">Apply</button>
-                              </td>
-                          </tr>
-                      </tbody>
-                  </table>
-                  <table class="table table-striped">
-                      <thead class="table-dark">
-                          <tr>
-                              <th>Job Post Name</th>
-                              <th>Job Post Budget</th>
-                              <th>Job Post Description</th>
-                              <th>Job Application Deadline</th>
-                              <th>Job Category</th>
-                              <th>Job Client</th>
-                              <th></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr v-for="job in SuggestedJobPosts" :key="job._id">
-                              <td>{{ job.jobPostName }}</td>
-                              <td>{{ job.jobPostBudget }}€</td>
-                              <td>{{ job.jobPostDescription }}</td>
-                              <td>{{ job.jobApplicationDeadline }}</td>
-                              <td>{{ job.jobCategory }}</td>
-                              <td>{{ job.clientName }}</td>
-                              <td>
-                                <button v-if="userRole == 'Freelancer' &&  hasApplied(job._id)" @click="unapply(job._id)">Unapply</button>
-                                <button v-if="userRole == 'Freelancer' &&  !hasApplied(job._id)" @click="applyJobPost(job._id)">Apply</button>
                               </td>
                           </tr>
                       </tbody>
@@ -84,7 +64,7 @@ export default {
       }
   },
   created() {
-      let apiURL = 'http://localhost:4000/api/getJobs';
+      let apiURL = 'http://localhost:4000/api/getJobs?limit=3';
       axios.get(apiURL).then(res => {
           this.JobPosts = res.data
       }).catch(error => {

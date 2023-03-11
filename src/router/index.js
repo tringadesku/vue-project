@@ -31,7 +31,7 @@ import CreateCity from "@/components/Admin/CreateCity.vue"
 import EditCity from "@/components/Admin/EditCity.vue"
 import ListCities from "@/components/Admin/ListCities.vue"
 
-import HomeComp from '../views/HomeComp.vue'
+import HomeComponent from "@/components/HomeComponent.vue"
 import SignUp from '../views/SignUp.vue'
 import LoginComp from '../views/LoginComp.vue'
 import store from '../store/index'
@@ -40,7 +40,7 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: HomeComp,
+    component: HomeComponent,
   },
   {
     path: "/testcomp",

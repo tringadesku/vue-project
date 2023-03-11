@@ -16,6 +16,20 @@ jobPostRoute.route('/getJobs').get((req, res, next) => {
     })
 })
 
+// get three latest jobposts
+jobPostRoute.route('/getLatestJobs').get((req, res, next) => {
+  JobPostModel.find()
+      .sort({ creationDate: -1 })
+      .limit(3)
+      .exec((error, data) => {
+          if (error) {
+              return next(error);
+          } else {
+              res.json(data);
+          }
+      });
+});
+
 // Search job post
 jobPostRoute.route('/search-jobPosts/:query').get((req, res, next) => {
     const query = req.params.query;
@@ -100,6 +114,7 @@ jobPostRoute.route('/delete-jobPost/:id').delete((req, res, next) => {
     })
 })
 
+//get suggested jobs
 jobPostRoute.route('/getSuggestedJobs').get((req, res, next) => {
   const jobCategory = req.query.jobCategory // Get the user ID from the query parameter
 
@@ -112,5 +127,18 @@ jobPostRoute.route('/getSuggestedJobs').get((req, res, next) => {
   })
 })
 
+//getlatestSuggested
+jobPostRoute.route('/getLatestSuggestedJobs').get((req, res, next) => {
+  const jobCategory = req.query.jobCategory // Get the user ID from the query parameter
+
+  JobPostModel.find({ jobCategory: jobCategory })
+  .sort({ creationDate: -1 })
+  .limit(3).exec((error, data) => {
+    if (error) {
+        return next(error);
+    } else {
+        res.json(data);
+    }
+})})
 
 module.exports = jobPostRoute;
