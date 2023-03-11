@@ -7,7 +7,7 @@ import MyJobPosts from "@/components/JobPosts/MyJobPosts.vue";
 import JobApplicants from "@/components/JobPosts/JobApplicants.vue";
 import MyJobApplications from "@/components/JobPosts/MyJobApplications.vue";
 import JobPosts from "@/components/JobPosts/JobPosts.vue";
-import TestComp from "@/components/TestComp.vue";
+import ManageUsers from "@/components/Admin/ManageUsers.vue";
 
 import CreateClientDetail from "@/components/ClientDetails/CreateClientDetail.vue";
 import EditClientDetail from "@/components/ClientDetails/EditClientDetail.vue";
@@ -43,9 +43,9 @@ const routes = [
     component: HomeComponent,
   },
   {
-    path: "/testcomp",
-    name: "TestComp",
-    component: TestComp,
+    path: "/users",
+    name: "Users",
+    component: ManageUsers,
   },
   {
     path: "/clients",
