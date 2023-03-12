@@ -40,6 +40,41 @@
                           </tr>
                       </tbody>
                   </table>
+
+                  <h2>My Projects:</h2>
+                  <table class="table table-striped">
+                      <thead class="table-dark">
+                          <tr>
+                              <th>Project</th>
+                              <th>Category</th>
+                              <th>Description</th>
+                              <th>Website</th>
+                              <th>Picture</th>
+                              <th>
+                                <router-link to="/createProject" class="btn btn-secondary px-3">Create Project</router-link>
+                              </th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr v-for="freelancerproject in FreelancerProjects" :key="freelancerproject._id">
+                              <td>{{ freelancerproject.projectName }}</td>
+                              <td>{{ freelancerproject.jobCategory}}</td>
+                              <td>{{ freelancerproject.projectDescription }}</td>
+                              <td><a :href=freelancerproject.projectWebsite>Visit Website</a></td>
+                              <td><img :src=freelancerproject.fileName alt="Project Thumbnail"></td>
+                              <td>
+                                  <router-link :to="{name: 'EditProject', params: {id: freelancerproject._id}}"
+                                  class="btn btn-success me-2">
+                                      Edit
+                                  </router-link>
+                                  <button @click.prevent="deleteFreelancerProject(freelancerproject._id)"
+                                  class="btn btn-danger">
+                                      Delete
+                                  </button>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
               </div>
 
            
@@ -56,6 +91,7 @@ export default {
   data() {
       return {
           FreelancerDetails: [],
+          FreelancerProjects: []
       }
   },
   created() {
@@ -70,7 +106,32 @@ export default {
         console.log(error)
       })
 
+      let projects = 'http://localhost:4000/api/getMyProjects';
+      axios.get(projects, { params: { freelancerId } })
+      .then(response => {
+        console.log(response.data)
+        this.FreelancerProjects = response.data
+        // Handle the response data here
+      })
+      .catch(error => {
+        console.log(error)
+      })
 
+
+  },
+  methods: {
+      deleteFreelancerProject(id) {
+          let apiURL = `http://localhost:4000/api/delete-freelancerProject/${id}`;
+          let indexOfArrayItem = this.FreelancerProjects.findIndex(i => i._id === id);
+
+          if (window.confirm("Do you really want to delete?")) {
+              axios.delete(apiURL).then(() => {
+                  this.FreelancerProjects.splice(indexOfArrayItem, 1)
+              }).catch(error => {
+                  console.log(error)
+              })
+          }
+      }
   }
 }
 </script>

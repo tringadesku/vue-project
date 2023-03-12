@@ -2,31 +2,31 @@
   <div class="row justify-content-center">
       <div class="col-md-6">
           <!-- edit here -->
-          <h1>Edit Projectt</h1>
-          <form @submit.prevent="handleUpdateForm">
-            <div class="form-group">
+          <h1>Edit Project</h1>
+          <form @submit.prevent="handleSubmitForm">
+              <div class="form-group">
                   <label for="projectName">Project: </label>
                   <input type="text" class="form-control" v-model="freelancerProject.projectName" required>
               </div>
               <div class="form-group">
                 <label for="jobCategory">Category:</label>
-                <select v-model="jobPost.jobCategory">
+                <select v-model="freelancerProject.jobCategory">
                 <option v-for="category in categories" :key="category._id" :value="category.categoryName">{{ category.categoryName }}</option>
                 </select>
-              </div>
+                 </div>
               <div class="form-group">
-                  <label for="projectDescription">Description</label>
+                  <label for="projectDescription">Description:</label>
                   <input type="text" class="form-control" v-model="freelancerProject.projectDescription" required>
               </div>
               <div class="form-group">
-                  <label for="projectWebsite">Website</label>
+                  <label for="projectWebsite">Website: </label>
                   <input type="text" class="form-control" v-model="freelancerProject.projectWebsite" required>
               </div>
-                   <div class="form-group">
-                  <label for="fileName">Picture</label>
+              <div class="form-group">
+                  <label for="fileName">Thumbnail Image Link:</label>
                   <input type="text" class="form-control" v-model="freelancerProject.fileName" required>
               </div>
-                   <div class="form-group mt-3">
+              <div class="form-group mt-3">
                   <button class="btn btn-success btn-block w-100" type="submit">Edit</button>
               </div>
           </form>
@@ -63,9 +63,9 @@ export default {
       handleUpdateForm() {
           let apiURL = `http://localhost:4000/api/update-freelancerProject/${this.$route.params.id}`;
 
-          axios.put(apiURL, this.jobPost).then((res) => {
+          axios.put(apiURL, this.freelancerProject).then((res) => {
               console.log(res)
-              this.$router.push('/listfreelancerProject')
+              this.$router.push('/freelancerprofile')
           }).catch(error => {
               console.log(error)
           })

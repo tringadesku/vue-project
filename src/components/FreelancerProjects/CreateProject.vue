@@ -19,11 +19,11 @@
                   <input type="text" class="form-control" v-model="freelancerProject.projectDescription" required>
               </div>
               <div class="form-group">
-                  <label for="projectWebsite">Website</label>
+                  <label for="projectWebsite">Website: </label>
                   <input type="text" class="form-control" v-model="freelancerProject.projectWebsite" required>
               </div>
               <div class="form-group">
-                  <label for="fileName">Picture</label>
+                  <label for="fileName">Thumbnail Image Link:</label>
                   <input type="text" class="form-control" v-model="freelancerProject.fileName" required>
               </div>
               <div class="form-group mt-3">
@@ -42,7 +42,9 @@ export default {
   data() {
       return {
           freelancerProject: {
-            ProjectName: '',
+            freelancerId: localStorage.getItem('userId'),
+            freelancerName: '',
+            projectName: '',
             jobCategory: '',
             projectDescription: '',
             projectWebsite: '',
@@ -60,11 +62,11 @@ export default {
           console.log(error)
       })
 
-      let freelancerproj = 'http://localhost:4000/api/getMyFreelancerDetails';
-      axios.get(freelancerproj, { params: { freelancerId } })
+      let freelancerDet = 'http://localhost:4000/api/getMyFreelancerDetails';
+      axios.get(freelancerDet, { params: { freelancerId } })
       .then(response => {
         console.log(response.data)
-        this.freelancerProject.ProjectName = response.data.at(0).projectDescription + " " + response.data.at(0).projectWebsite
+        this.freelancerProject.freelancerName = response.data.at(0).firstName + " " + response.data.at(0).lastName
         // Handle the response data here
       })
       .catch(error => {

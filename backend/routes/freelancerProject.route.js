@@ -6,7 +6,7 @@ const freelancerProjectRoute = express.Router();
 let FreelancerProjectModel = require('../models/FreelancerProject');
 
 // Get all data
-freelancerProjectRoute.route('/getJobs').get((req, res, next) => {
+freelancerProjectRoute.route('/getProjects').get((req, res, next) => {
   FreelancerProjectModel.find((error, data) => {
         if (error) {
             return next(error);
@@ -19,7 +19,7 @@ freelancerProjectRoute.route('/getJobs').get((req, res, next) => {
   
   
 // Get by client id
-jobPostRoute.route('/getMyProjects').get((req, res, next) => {
+freelancerProjectRoute.route('/getMyProjects').get((req, res, next) => {
     const freelancerId = req.query.freelancerId // Get the user ID from the query parameter
   
     FreelancerProjectModel.find({ freelancerId: freelancerId }, (error, data) => {
@@ -32,7 +32,7 @@ jobPostRoute.route('/getMyProjects').get((req, res, next) => {
   })
   
 
-// Create Job Post
+// Create Project
 freelancerProjectRoute.route('/create-freelancerProject').post((req, res, next) => {
   FreelancerProjectModel.create(req.body, (error, data) => {
         if (error) {
@@ -43,9 +43,9 @@ freelancerProjectRoute.route('/create-freelancerProject').post((req, res, next) 
     })
 })
 
-// Edit jobpost data
+// Edit project data
 freelancerProjectRoute.route('/edit-freelancerProject/:id').get((req, res, next) => {
-  JobPostModel.findById(req.params.id, (error, data) => {
+    FreelancerProjectModel.findById(req.params.id, (error, data) => {
         if (error) {
             return next(error);
         } else {
@@ -54,8 +54,8 @@ freelancerProjectRoute.route('/edit-freelancerProject/:id').get((req, res, next)
     })
 })
 
-// Update jobpost data
-jobPostRoute.route('/update-freelancerProject/:id').put((req, res, next) => {
+// Update project data
+freelancerProjectRoute.route('/update-freelancerProject/:id').put((req, res, next) => {
     FreelancerProjectModel.findByIdAndUpdate(req.params.id, {
         $set: req.body
     }, (error, data) => {

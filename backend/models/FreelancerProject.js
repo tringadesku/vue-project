@@ -5,6 +5,9 @@ let freelancerProjectSchema = new Schema({
     freelancerId: {
         type: String
     },
+    freelancerName: {
+      type: String
+    },
     projectName: {
         type: String
     },
@@ -12,7 +15,7 @@ let freelancerProjectSchema = new Schema({
       type: String
     },
     projectDescription: {
-      type: Date
+      type: String
     },
     projectWebsite: {
       type: String

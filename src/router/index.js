@@ -38,7 +38,6 @@ import ListFreelancerDetails from "@/components/Admin/ListFreelancerDetails.vue"
 
 import CreateProject from "@/components/FreelancerProjects/CreateProject.vue";
 import EditProject from "@/components/FreelancerProjects/EditProject.vue";
-import MyProjects from "@/components/FreelancerProjects/MyProjects.vue";
 import FreelancerProjects from "@/components/FreelancerProjects/FreelancerProjects.vue";
 
 
@@ -221,17 +220,12 @@ const routes = [
     component: FreelancerProjects,
   },
   {
-    path: "/createfreelancerproject",
+    path: "/createproject",
     name: "CreateProject",
     component: CreateProject,
   },
   {
-    path: "/myProjects",
-    name: "MyProjects",
-    component: MyProjects,
-  },
-  {
-    path: "/editfreelancerProject",
+    path: "/editProject",
     name: "EditProject",
     component: EditProject,
   },
