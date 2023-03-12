@@ -107,6 +107,20 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }).then(response => {
+
+        var activity = {
+                    activityDescription: "ClientDetails for '" + this.form.firstName + " " + this.form.lastName + "' were created",
+                    activityDate: new Date(),
+                    userId: localStorage.getItem('userId')
+            }
+
+            let activityURL = 'http://localhost:4000/api/create-activity';
+            axios.post(activityURL, activity).then(() => {
+                console.log(activity)
+            })
+
+            this.$router.push('/clientprofile');
+
         console.log(response.data);
         // Reset the form
         this.form.clientId = '';

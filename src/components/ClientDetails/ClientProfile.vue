@@ -77,7 +77,7 @@
                                     class="btn btn-primary me-2">
                                          Suggested Freelancers
                                     </router-link>
-                                    <button @click.prevent="deleteJobPost(jobpost._id)"
+                                    <button @click.prevent="deleteJobPost(jobpost._id, jobpost.jobPostName)"
                                     class="btn btn-danger">
                                         Delete
                                     </button>
@@ -127,13 +127,25 @@
         })
     },
     methods: {
-      deleteJobPost(id) {
+      deleteJobPost(id, jobPostName) {
+        var activity = {
+                    activityDescription: "JobPost '" + jobPostName + "' was deleted",
+                    activityDate: new Date(),
+                    userId: localStorage.getItem('userId')
+            }
+
             let apiURL = `http://localhost:4000/api/delete-jobpost/${id}`;
             let indexOfArrayItem = this.JobPosts.findIndex(i => i._id === id);
   
             if (window.confirm("Do you really want to delete?")) {
                 axios.delete(apiURL).then(() => {
                     this.JobPosts.splice(indexOfArrayItem, 1)
+
+                    let activityURL = 'http://localhost:4000/api/create-activity';
+                    axios.post(activityURL, activity).then(() => {
+                        console.log(activity)
+                    })
+
                 }).catch(error => {
                     console.log(error)
                 })
