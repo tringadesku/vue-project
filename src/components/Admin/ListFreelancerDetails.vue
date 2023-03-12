@@ -1,48 +1,47 @@
 <template>
   <div class="justify-content-center">
+
       <!-- Display jobpost list -->
-      <h1>All Client Details</h1>
+      <h1>Freelancers</h1>
       <div class="row">
           <div class="col-md-12">
               <div class="table-responsive">
                   <table class="table table-striped">
                     <thead class="table-dark">
                           <tr>
-                              <th>Client ID</th>
                               <th>First Name</th>
                               <th>Last Name</th>
-                              <th>Company</th>
-                              <th>Position</th>
+                              <th>Category</th>
                               <th>City</th>
-                              <th>Description</th>
-                              <th>Profile Pic</th>
-                              <th>
-                               
-                              </th>
+                              <th>Education</th>
+                              <th>Experience</th>
+                              <th>Hourly Rate</th>
+                               <th>Profile Pic</th>
+                              <th></th>
                           </tr>
                       </thead>
                       <tbody>
-                          <tr v-for="cd in ClientDetails" :key="cd._id">
-                              <td>{{ cd.clientId }}</td>
+                          <tr v-for="cd in FreelancerDetails" :key="cd._id">
                               <td>{{ cd.firstName }}</td>
                               <td>{{ cd.lastName }}</td>
-                              <td>{{ cd.companyName }}</td>
-                              <td>{{ cd.position }}</td>
+                              <td>{{ cd.jobCategory }}</td>
                               <td>{{ cd.city }}</td>
-                              <td>{{ cd.description }}</td>
+                              <td>{{ cd.education }}</td>
+                              <td>{{ cd.experience }}</td>
+                              <td>{{ cd.hourlyRate }}</td>
                               <td>
                               <img :src="'/uploads/' + cd.profileImg" alt="Profile Image">
                               </td>
                               <td>
-                                <router-link :to="{name: 'EditClientDetail', params: {id: cd._id}}"
+                                <router-link :to="{name: 'EditFreelancerDetail', params: {id: cd._id}}"
                                   class="btn btn-success me-2">
                                       Edit
                                   </router-link>
-                                  <router-link :to="{name: 'ViewClientProfile', params: {id: cd.clientId}}"
+                                <router-link :to="{name: 'ViewFreelancerProfile', params: {id: cd.freelancerId}}"
                                   class="btn btn-success me-2">
                                       View Profile
                                   </router-link>
-                                  <button @click.prevent="deleteClientDetail(cd._id)"
+                                  <button @click.prevent="deleteFreelancerDetail(cd._id)"
                                   class="btn btn-danger">
                                       Delete
                                   </button>
@@ -62,31 +61,34 @@ import axios from "axios";
 export default {
   data() {
       return {
-          ClientDetails: []
+        query: '',
+        results: [],
+        FreelancerDetails: []
       }
   },
   created() {
-      let apiURL = 'http://localhost:4000/api/getClientDetails';
+      let apiURL = 'http://localhost:4000/api/getFreelancerDetails';
       axios.get(apiURL).then(res => {
-          this.ClientDetails = res.data
+          this.FreelancerDetails = res.data
       }).catch(error => {
           console.log(error)
       })
+
   },
   methods: {
-      deleteClientDetail(id) {
-          let apiURL = `http://localhost:4000/api/delete-clientDetail/${id}`;
-          let indexOfArrayItem = this.ClientDetails.findIndex(i => i._id === id);
+    deleteClientDetail(id) {
+          let apiURL = `http://localhost:4000/api/delete-freelancerDetail/${id}`;
+          let indexOfArrayItem = this.FreelancerDetails.findIndex(i => i._id === id);
 
           if (window.confirm("Do you really want to delete?")) {
               axios.delete(apiURL).then(() => {
-                  this.ClientDetails.splice(indexOfArrayItem, 1)
+                  this.FreelancerDetails.splice(indexOfArrayItem, 1)
               }).catch(error => {
                   console.log(error)
               })
           }
       }
-  }
+ }
 }
 </script>
 

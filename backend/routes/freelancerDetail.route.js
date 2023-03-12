@@ -30,6 +30,18 @@ freelancerDetailRoute.route('/getFreelancerDetails').get((req, res, next) => {
   })
 })
 
+//get only 4 freelancers
+freelancerDetailRoute.route('/getFourFreelancers').get((req, res, next) => {
+  FreelancerDetailModel.find().limit(4).exec((error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
+  })
+})
+
+
 // Search freelancer details
 freelancerDetailRoute.route('/search-freelancerDetails/:query').get((req, res, next) => {
   const query = req.params.query;

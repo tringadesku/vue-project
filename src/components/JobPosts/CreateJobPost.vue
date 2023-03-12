@@ -59,7 +59,8 @@ export default {
             jobApplicationDeadline: '',
             jobCategory: '',
             clientId: localStorage.getItem('userId'),
-            clientName: ''
+            clientName: '',
+            creationDate: new Date()
           },
           categories: [],
       }

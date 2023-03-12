@@ -1,4 +1,7 @@
 import { createStore } from 'vuex'
+import router from '@/router'
+import axios from 'axios';
+
 
 // firebase imports
 import { auth, db } from '../firebase/config'
@@ -54,7 +57,7 @@ const store = createStore({
         const user = res.user
         var roli = pickedRole; 
 
-        const adminEmails = ['admin1@example.com', 'admin2@example.com']
+        const adminEmails = ['admin1@example.com', 'tringa@admin.com']
         console.log()
         if (adminEmails.includes(email)){
           roli = "Admin";
@@ -78,6 +81,74 @@ const store = createStore({
       const res = await signInWithEmailAndPassword(auth, email, password)
       if (res) {
         context.commit('setUser', res.user)
+        console.log("Alloooo")
+
+
+          var lastLogin = {
+            userId: res.user.uid,
+            lastLoginTime: new Date()
+          }
+  
+          var userId = res.user.uid
+          axios.get('http://localhost:4000/api/getMyLastLogin', { params: { userId } })
+          .then(response => {
+            console.log("A po e merr last login?")
+            console.log(response.data)
+            if(response.data.at(0) == null){
+              let apiURL = 'http://localhost:4000/api/create-lastLogin';
+              axios.post(apiURL, lastLogin).then(() => {
+                console.log(lastLogin)
+              })
+            }
+            else{
+              var JobPosts = []
+              var count = 0
+              var jobCategory = ''
+              var loginId = response.data.at(0)._id
+              var lastLoginTime = response.data.at(0).lastLoginTime
+              var freelancerId = lastLogin.userId
+  
+              let apiiURL = 'http://localhost:4000/api/getMyFreelancerDetails';
+              axios.get(apiiURL, { params: { freelancerId } })
+              .then(response => {
+                jobCategory = response.data.at(0).jobCategory
+                console.log("kategoria jem "+ jobCategory)
+  
+                axios.get('http://localhost:4000/api/getSuggestedJobs', { params: { jobCategory } })
+                  .then(response => {
+                    console.log("suggested posts" + response.data)
+                    JobPosts = response.data
+  
+                    JobPosts.forEach(jobPost => {
+                      const creationDatetime = jobPost.creationDate;
+                      console.log("last cr datetime" + creationDatetime)
+                      console.log(lastLoginTime)
+                      if (creationDatetime > lastLoginTime) {
+                        count++                    
+                      }
+                    });
+    
+                    if(count == 1){
+                      alert("There is " + count + " new jobpost for " + jobCategory);
+                    }
+                    else if(count > 1){
+                      alert("There are " + count + " new jobposts for " + jobCategory);
+                    }
+    
+                    let updateURL = `http://localhost:4000/api/update-lastLogin/${loginId}`;
+                    axios.put(updateURL, lastLogin).then((res) => {
+                        console.log(res)
+                    })
+
+                    location.reload(true)
+                  })
+                })
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        
       } else {
         throw new Error('could not complete login')
       }
@@ -89,6 +160,8 @@ const store = createStore({
 
       await signOut(auth)
       context.commit('setUser', null)
+      router.push({ path: '/' })
+
     }
   }
 })

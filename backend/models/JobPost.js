@@ -22,6 +22,9 @@ let jobPostSchema = new Schema({
     },
     clientName: {
       type: String
+    },
+    creationDate: {
+      type: Date
     }
 }, {
     collection: 'jobPosts'

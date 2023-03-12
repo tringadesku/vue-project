@@ -1,6 +1,21 @@
 <template>
   <div class="justify-content-center">
-    <h1>This is the homepage!</h1>
+
+    <div v-if="userRole == undefined" class="px-4 py-5 text-center" style="margin-top:100px;margin-bottom:100px">
+      <h1 class="display-5 fw-bold">Welcome to JobMatch</h1>
+      <div class="col-lg-6 mx-auto">
+          <p class="lead mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sed ante ac nisi euismod tincidunt. Ut nec auctor diam. Curabitur sit amet porttitor ligula, non feugiat dolor. Praesent pharetra felis eu fermentum aliquam. Cras at facilisis nulla. Aliquam sit amet ligula quis elit tristique accumsan. Sed quis lacus vitae orci congue porta. Pellentesque at eleifend ante. In velit ipsum, fringilla in arcu id, bibendum luctus justo.</p>
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <router-link to="/login" class="btn btn-primary btn-lg px-4 gap-3">Log In</router-link>
+            <router-link to="/signup" class="btn btn-outline-primary btn-lg px-4">Sign Up</router-link>
+          </div>
+        </div>
+    </div>
+
+    <div v-if="userRole == 'Freelancer' || userRole == 'Client'" class="slider">
+      <h1>Qitu pls sliderin qe mundesh me ndreq, links t fotov ti kom lon te data poshte te array images</h1>
+  </div>
+  
     <div v-if="userRole == 'Freelancer'">
       <h3>Latest Job Posts: </h3>
       <table class="table table-striped">
@@ -82,6 +97,154 @@
 
                   <button>View All Suggested JobPosts >></button>
     </div>
+
+    <div v-if="userRole == 'Client'">
+      <router-link :to="{name: 'CreateJobPost'}" class="btn btn-success me-2">
+        Create New Job Post
+      </router-link>
+
+      <h3>Freelancers in JobMatch:</h3>
+      <table class="table table-striped">
+                    <thead class="table-dark">
+                          <tr>
+                              <th>First Name</th>
+                              <th>Last Name</th>
+                              <th>Category</th>
+                              <th>City</th>
+                              <th>Education</th>
+                              <th>Experience</th>
+                              <th>Hourly Rate</th>
+                               <th>Profile Pic</th>
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr v-for="cd in Freelancers" :key="cd._id">
+                              <td>{{ cd.firstName }}</td>
+                              <td>{{ cd.lastName }}</td>
+                              <td>{{ cd.jobCategory }}</td>
+                              <td>{{ cd.city }}</td>
+                              <td>{{ cd.education }}</td>
+                              <td>{{ cd.experience }}</td>
+                              <td>{{ cd.hourlyRate }}</td>
+                              <td>
+                              <img :src="'/uploads/' + cd.profileImg" alt="Profile Image">
+                              </td>
+                              <td>
+                                <router-link :to="{name: 'ViewFreelancerProfile', params: {id: cd.freelancerId}}"
+                                  class="btn btn-success me-2">
+                                      View Profile
+                                  </router-link>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+
+                  <router-link :to="{name: 'Freelancers'}"
+                                  class="btn btn-success me-2">
+                                      View All Freelancers >> 
+                  </router-link>
+      </div>
+      <div v-if="userRole == 'Admin'" class="card my-5">
+        <h1 class="my-5">Admin Dashboard</h1>
+
+        <router-link :to="{name: 'ActivityLog'}"
+                                class="w-100 btn btn-sm btn-primary my-3">
+                                      View Activity Log >> 
+        </router-link>
+
+            <div class="card-body">
+                <div class="row gy-5">
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="text-center">Categories</h4>
+                                <hr />
+                                <router-link :to="{name: 'Categories'}"
+                                class="w-100 btn btn-sm btn-primary mb-2">
+                                      Manage Categories >> 
+                                </router-link>
+                                <router-link :to="{name: 'CreateCategory'}"
+                                class="w-100 btn btn-sm btn-outline-primary">
+                                      Create Category >> 
+                                </router-link>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="text-center">Cities</h4>
+                                <hr />
+                                <router-link :to="{name: 'cities'}"
+                                class="w-100 btn btn-sm btn-primary mb-2">
+                                      Manage Cities >> 
+                                </router-link>
+                                <router-link :to="{name: 'CreateCity'}"
+                                class="w-100 btn btn-sm btn-outline-primary">
+                                      Create City >> 
+                                </router-link>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="text-center">JobPosts</h4>
+                                <hr />
+                                <router-link :to="{name: 'ListJobPosts'}"
+                                class="w-100 btn btn-sm btn-primary my-3">
+                                      Manage JobPosts >> 
+                                </router-link>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="text-center">Client Details</h4>
+                                <hr />
+                                <router-link :to="{name: 'ClientDetails'}"
+                                class="w-100 btn btn-sm btn-primary my-3">
+                                      Manage Client Details >> 
+                                </router-link>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="text-center">Freelancer Details</h4>
+                                <hr />
+                                <router-link :to="{name: 'FreelancerDetails'}"
+                                class="w-100 btn btn-sm btn-primary my-3">
+                                      Manage Freelancer Details >> 
+                                </router-link>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="text-center">Manage Users</h4>
+                                <hr />
+                                <router-link :to="{name: 'Users'}"
+                                class="w-100 btn btn-sm btn-primary my-3">
+                                      Manage Users >> 
+                                </router-link>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+      </div>
   </div>
 </template>
 
@@ -95,13 +258,30 @@ export default{
       JobPosts: [],
       SuggestedJobPosts: [],
       JobApplications: [],
+      Freelancers: [],
       userRole: localStorage.getItem('userRole'),
+      images: [
+        'https://publitas.com/wp-content/uploads/2023/01/how-to-amplify-word-of-mouth-marketing-with-online-catalogues.jpg',
+        'https://t3.ftcdn.net/jpg/02/33/12/44/360_F_233124436_78mVMPy74gldjeo6rdyJgRklPIGSAwl7.jpg',
+        'https://images.squarespace-cdn.com/content/v1/5f78e89c7ec702130762b178/1619791419750-OXMONJ7MO1SW0I2FGLIY/JoinOurTeam_Header.jpeg'
+      ],
+      currentSlide: 0,
+      slideWidth: 0
     }
   },
   created(){
+
     let apiURL = 'http://localhost:4000/api/getLatestJobs';
       axios.get(apiURL).then(res => {
           this.JobPosts = res.data
+      }).catch(error => {
+          console.log(error)
+      })
+
+      let freelancers = 'http://localhost:4000/api/getFourFreelancers';
+      axios.get(freelancers).then(res => {
+          this.Freelancers = res.data
+          console.log(res.data)
       }).catch(error => {
           console.log(error)
       })
@@ -145,6 +325,10 @@ export default{
       })
   },
   methods: {
+    nextSlide() {
+      this.currentSlide = (this.currentSlide + 1) % this.images.length
+    },
+
     searchJobPosts() {
       axios.get(`http://localhost:4000/api/search-jobPosts/${this.searchQuery}`)
         .then(response => {

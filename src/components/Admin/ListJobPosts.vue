@@ -14,9 +14,8 @@
                               <th>Job Application Deadline</th>
                               <th>Job Category</th>
                               <th>Job Client</th>
-                              <th>
-                                <router-link to="/createJobPost" class="btn btn-secondary px-3">Create JobPost</router-link>
-                              </th>
+                              <th></th>
+                              <th></th>
                           </tr>
                       </thead>
                       <tbody>
@@ -32,11 +31,13 @@
                                   class="btn btn-success me-2">
                                       Edit
                                   </router-link>
+                                </td>
+                                <td>
                                   <button @click.prevent="deleteJobPost(jobpost._id)"
                                   class="btn btn-danger">
                                       Delete
                                   </button>
-                              </td>
+                                </td>
                           </tr>
                       </tbody>
                   </table>

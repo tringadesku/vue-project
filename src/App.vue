@@ -5,14 +5,23 @@
         <div class="container">
           <router-link to="/" class="navbar-brand float-left">JobMatch</router-link>
           <ul class="nav navbar-nav flex-row float-right">
-            <li v-if="user" class="nav-item">
-              <router-link to="/jobposts" class="nav-link px-3">JobPosts</router-link>
-            </li>
             <li v-if="!user" class="nav-item">
               <router-link to="/signup" class="nav-link px-3">Sign Up</router-link>
             </li>
             <li v-if="!user" class="nav-item">
               <router-link to="/login" class="nav-link px-3">Log In</router-link>
+            </li>
+            <li v-if="user" class="nav-item">
+              <router-link to="/" class="nav-link px-3">Home</router-link>
+            </li>
+            <li v-if="user" class="nav-item">
+              <router-link to="/jobposts" class="nav-link px-3">JobPosts</router-link>
+            </li>
+            <li v-if="user && userRole == 'Client'" class="nav-item">
+              <router-link to="/freelancers"  class="nav-link px-3">Freelancers</router-link>
+            </li>
+            <li v-if="user && userRole == 'Freelancer'" class="nav-item">
+              <router-link to="/clients" class="nav-link px-3">Clients</router-link>
             </li>
             <li v-if="user" class="nav-item">
               <span class="nav-link active px-3">{{ user.email }} </span>

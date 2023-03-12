@@ -31,6 +31,9 @@ import CreateCity from "@/components/Admin/CreateCity.vue"
 import EditCity from "@/components/Admin/EditCity.vue"
 import ListCities from "@/components/Admin/ListCities.vue"
 
+import ActivityLog from "@/components/Admin/ActivityLog.vue"
+import ListFreelancerDetails from "@/components/Admin/ListFreelancerDetails.vue"
+
 import HomeComponent from "@/components/HomeComponent.vue"
 import SignUp from '../views/SignUp.vue'
 import LoginComp from '../views/LoginComp.vue'
@@ -46,6 +49,11 @@ const routes = [
     path: "/users",
     name: "Users",
     component: ManageUsers,
+  },
+  {
+    path: "/activitylog",
+    name: "ActivityLog",
+    component: ActivityLog,
   },
   {
     path: "/clients",
@@ -76,6 +84,11 @@ const routes = [
     path: "/clientdetails",
     name: "ClientDetails",
     component: ListClientDetails,
+  },
+  {
+    path: "/freelancerdetails",
+    name: "FreelancerDetails",
+    component: ListFreelancerDetails,
   },
   {
     path: "/suggestedFreelancers",
@@ -137,7 +150,7 @@ const routes = [
   },
   {
     path: "/categories",
-    name: "categories",
+    name: "Categories",
     component: ListCategories,
     //meta: { requiresAuth: true }
   },
