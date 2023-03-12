@@ -34,6 +34,14 @@ import ListCities from "@/components/Admin/ListCities.vue"
 import ActivityLog from "@/components/Admin/ActivityLog.vue"
 import ListFreelancerDetails from "@/components/Admin/ListFreelancerDetails.vue"
 
+
+
+import CreateProject from "@/components/FreelancerProjects/CreateProject.vue";
+import EditProject from "@/components/FreelancerProjects/EditProject.vue";
+import MyProjects from "@/components/FreelancerProjects/MyProjects.vue";
+import FreelancerProjects from "@/components/FreelancerProjects/FreelancerProjects.vue";
+
+
 import HomeComponent from "@/components/HomeComponent.vue"
 import SignUp from '../views/SignUp.vue'
 import LoginComp from '../views/LoginComp.vue'
@@ -206,6 +214,26 @@ const routes = [
     path: "/freelancers",
     name: "Freelancers",
     component: AllFreelancers,
+  },
+  {
+    path: "/FreelancerProjects",
+    name: "FreelancerProjects",
+    component: FreelancerProjects,
+  },
+  {
+    path: "/createfreelancerproject",
+    name: "CreateProject",
+    component: CreateProject,
+  },
+  {
+    path: "/myProjects",
+    name: "MyProjects",
+    component: MyProjects,
+  },
+  {
+    path: "/editfreelancerProject",
+    name: "EditProject",
+    component: EditProject,
   },
 ];
 
