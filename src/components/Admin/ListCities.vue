@@ -22,7 +22,7 @@
                                     class="btn btn-success me-2">
                                         Edit
                                     </router-link>
-                                    <button @click.prevent="deleteCity(c._id)"
+                                    <button @click.prevent="deleteCity(c._id, c.city)"
                                     class="btn btn-danger">
                                         Delete
                                     </button>
@@ -54,13 +54,25 @@
         })
     },
     methods: {
-        deleteCity(id) {
+        deleteCity(id, city) {
+            var activity = {
+                    activityDescription: "City '" + city + "' was deleted",
+                    activityDate: new Date(),
+                    userId: localStorage.getItem('userId')
+            }
+
             let apiURL = `http://localhost:4000/api/delete-city/${id}`;
             let indexOfArrayItem = this.Cities.findIndex(i => i._id === id);
   
             if (window.confirm("Do you really want to delete?")) {
                 axios.delete(apiURL).then(() => {
                     this.Cities.splice(indexOfArrayItem, 1)
+
+                    let activityURL = 'http://localhost:4000/api/create-activity';
+                    axios.post(activityURL, activity).then(() => {
+                        console.log(activity)
+                    })
+                    
                 }).catch(error => {
                     console.log(error)
                 })

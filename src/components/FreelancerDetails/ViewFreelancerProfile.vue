@@ -32,6 +32,29 @@
                           </tr>
                       </tbody>
                   </table>
+
+                  <h2>{{ FreelancerDetails.at(0).firstName }}'s Projects:</h2>
+                  <table class="table table-striped">
+                      <thead class="table-dark">
+                          <tr>
+                              <th>Project</th>
+                              <th>Category</th>
+                              <th>Description</th>
+                              <th>Website</th>
+                              <th>Picture</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr v-for="freelancerproject in FreelancerProjects" :key="freelancerproject._id">
+                              <td>{{ freelancerproject.projectName }}</td>
+                              <td>{{ freelancerproject.jobCategory}}</td>
+                              <td>{{ freelancerproject.projectDescription }}</td>
+                              <td><a :href=freelancerproject.projectWebsite>Visit Website</a></td>
+                              <td><img :src=freelancerproject.fileName alt="Project Thumbnail"></td>
+                          </tr>
+                      </tbody>
+                  </table>
+
               </div>
           </div>
       </div>
@@ -44,7 +67,8 @@ import axios from "axios";
 export default {
   data() {
       return {
-          FreelancerDetails: []
+          FreelancerDetails: [],
+          FreelancerProjects: []
       }
   },
   created() {
@@ -54,6 +78,17 @@ export default {
       .then(response => {
         console.log(response.data)
         this.FreelancerDetails = response.data
+        // Handle the response data here
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+      let projects = 'http://localhost:4000/api/getMyProjects';
+      axios.get(projects, { params: { freelancerId } })
+      .then(response => {
+        console.log(response.data)
+        this.FreelancerProjects = response.data
         // Handle the response data here
       })
       .catch(error => {

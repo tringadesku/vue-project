@@ -32,10 +32,19 @@
             let apiURL = 'http://localhost:4000/api/create-city';
   
             axios.post(apiURL, this.city).then(() => {
-                this.city = {
-                    city: ''
-                }
-                this.$router.push('/cities');
+                var activity = {
+                    activityDescription: "City '" + this.city.city + "' was created",
+                    activityDate: new Date(),
+                    userId: localStorage.getItem('userId')
+            }
+
+            let activityURL = 'http://localhost:4000/api/create-activity';
+            axios.post(activityURL, activity).then(() => {
+                console.log(activity)
+            })
+
+            this.$router.push('/cities');
+            
             }).catch(error => {
                 console.log(error);
             })
@@ -43,4 +52,3 @@
     }
   }
   </script>
-  

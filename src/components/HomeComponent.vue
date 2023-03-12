@@ -264,9 +264,7 @@ export default{
         'https://publitas.com/wp-content/uploads/2023/01/how-to-amplify-word-of-mouth-marketing-with-online-catalogues.jpg',
         'https://t3.ftcdn.net/jpg/02/33/12/44/360_F_233124436_78mVMPy74gldjeo6rdyJgRklPIGSAwl7.jpg',
         'https://images.squarespace-cdn.com/content/v1/5f78e89c7ec702130762b178/1619791419750-OXMONJ7MO1SW0I2FGLIY/JoinOurTeam_Header.jpeg'
-      ],
-      currentSlide: 0,
-      slideWidth: 0
+      ]
     }
   },
   created(){
@@ -325,10 +323,6 @@ export default{
       })
   },
   methods: {
-    nextSlide() {
-      this.currentSlide = (this.currentSlide + 1) % this.images.length
-    },
-
     searchJobPosts() {
       axios.get(`http://localhost:4000/api/search-jobPosts/${this.searchQuery}`)
         .then(response => {

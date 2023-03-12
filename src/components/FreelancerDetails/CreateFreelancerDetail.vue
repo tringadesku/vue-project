@@ -22,13 +22,13 @@
       </div>
       <div class="form-group">
                 <label for="city">City:</label>
-                <select v-model="form.city">
+                <select v-model="form.city" class="form-control">
                 <option v-for="city in cities" :key="city._id" :value="city.city">{{ city.city }}</option>
                 </select>
       </div>
         <div class="form-group">
                 <label for="jobCategory">Category:</label>
-                <select v-model="form.jobCategory">
+                <select v-model="form.jobCategory" class="form-control">
                 <option v-for="category in categories" :key="category._id" :value="category.categoryName">{{ category.categoryName }}</option>
                 </select>
       </div>
@@ -127,6 +127,20 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }).then(response => {
+
+        var activity = {
+                    activityDescription: "FreelancerDetails for '" + this.form.firstName + " " + this.form.lastName + "' were created",
+                    activityDate: new Date(),
+                    userId: localStorage.getItem('userId')
+            }
+
+            let activityURL = 'http://localhost:4000/api/create-activity';
+            axios.post(activityURL, activity).then(() => {
+                console.log(activity)
+            })
+
+            this.$router.push('/freelancerprofile');
+        
         console.log(response.data);
         // Reset the form
         this.form.freelancerId = '';

@@ -69,6 +69,17 @@ export default {
       handleUpdateForm() {
           let apiURL = `http://localhost:4000/api/update-clientDetail/${this.$route.params.id}`;
 
+          var activity = {
+                    activityDescription: "ClientDetails for '" + this.clientDetail.firstName + " "+ this.clientDetail.lastName+"' were edited",
+                    activityDate: new Date(),
+                    userId: localStorage.getItem('userId')
+            }
+            
+            let activityURL = 'http://localhost:4000/api/create-activity';
+            axios.post(activityURL, activity).then(() => {
+                console.log(activity)
+            })
+
           axios.put(apiURL, this.jobPost).then((res) => {
               console.log(res)
               this.$router.push('/clientProfile')

@@ -37,9 +37,20 @@
         handleUpdateForm() {
             let apiURL = `http://localhost:4000/api/update-city/${this.$route.params.id}`;
   
-            axios.put(apiURL, this.city).then((res) => {
-                console.log(res)
-                this.$router.push('/cities')
+            axios.put(apiURL, this.city).then(() => {
+                var activity = {
+                    activityDescription: "City '" + this.city.city + "' was edited",
+                    activityDate: new Date(),
+                    userId: localStorage.getItem('userId')
+            }
+
+            let activityURL = 'http://localhost:4000/api/create-activity';
+            axios.post(activityURL, activity).then(() => {
+                console.log(activity)
+            })
+
+            this.$router.push('/cities')
+
             }).catch(error => {
                 console.log(error)
             })
