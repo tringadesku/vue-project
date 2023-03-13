@@ -14,12 +14,17 @@
             <li v-if="user" class="nav-item">
               <router-link to="/" class="nav-link px-3">Home</router-link>
             </li>
-            <li v-if="user" class="nav-item">
+            <li v-if="user && userRole == 'Freelancer'" class="nav-item">
               <router-link to="/jobposts" class="nav-link px-3">JobPosts</router-link>
             </li>
+
             <li v-if="user && userRole == 'Client'" class="nav-item">
               <router-link to="/freelancers"  class="nav-link px-3">Freelancers</router-link>
             </li>
+            <li v-if="user && userRole == 'Client'" class="nav-item">
+              <router-link to="/freelancerprojects" class="nav-link px-3">Freelancer Projects</router-link>
+            </li>
+
             <li v-if="user && userRole == 'Freelancer'" class="nav-item">
               <router-link to="/clients" class="nav-link px-3">Clients</router-link>
             </li>
