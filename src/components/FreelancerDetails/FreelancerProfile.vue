@@ -8,7 +8,7 @@
                     <table class="table table-striped">
                       <thead class="table-dark">
                             <tr>
-                                <th>First Name</th>
+                                <th>First Name2</th>
                                 <th>Last Name</th>
                                 <th>City</th>
                                 <th>Category</th>
@@ -78,6 +78,20 @@
                 </div>
   
              
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4 mb-4">
+        <div class="row">
+            <div class="col-4">
+                <div class="card" v-if="FreelancerDetails.at(0) != null">
+                    <div class="card-body" v-for="cd in FreelancerDetails" :key="cd._id">
+                        <h3 class="card-title">{{ cd.firstName }} {{ cd.lastName }}</h3>
+                    </div>
+
+                    
+                </div>
             </div>
         </div>
     </div>
