@@ -1,23 +1,55 @@
 <template>
+  <section style="margin-top:100px;margin-bottom:100px;">
+    <!-- Jumbotron -->
+    <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+        <div class="container">
+            <div class="row gx-lg-5 align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <h1 class="my-5 display-3 fw-bold ls-tight">
+                        Register to <br />
+                        <span class="text-primary">Jobmatch</span>
+                    </h1>
+                    <p style="color: hsl(217, 10%, 50.8%)">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Eveniet, itaque accusantium odio, soluta, corrupti aliquam
+                        quibusdam tempora at cupiditate quis eum maiores libero
+                        veritatis? Dicta facilis sint aliquid ipsum atque?
+                    </p>
+                </div>
+
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="card">
+                        <div class="card-body py-5 px-md-5">
   <form @submit.prevent="handleSubmit">
-    <h3>Sign up</h3>
 
-    <label for="email">Email:</label>
-    <input type="email" name="email" v-model="email" required>
+    <div class="form-outline mb-4">
+      <label for="email" class="form-label">Email:</label>
+      <input type="email" class="form-control" name="email" v-model="email" required>
+    </div>
 
-    <label for="email">Password:</label>
-    <input type="password" name="password" v-model="password" required>
+    <div class="form-outline mb-4">
+      <label for="email" class="form-label">Password:</label>
+      <input type="password" class="form-control" name="password" v-model="password" required>
+    </div>
 
-    <section>
-      <h3>Pick Role:</h3>
-      <input type="radio" name="pickedRole" v-model="pickedRole" value="Freelancer">Freelancer
-      <input type="radio" name="pickedRole"  v-model="pickedRole" value="Client">Client
-      <br />
+    <section class="form-outline mb-4">
+      <label class="form-label">Pick Role:</label><br>
+      <input type="radio" class="form-check-input" name="pickedRole" v-model="pickedRole" value="Freelancer"> Freelancer
+      <input type="radio" class="form-check-input" name="pickedRole"  v-model="pickedRole" value="Client"> Client
     </section>
 
-    <button>Sign up</button>
-    <div v-if="error">{{ error }}</div>
+    <button class="btn btn-primary btn-block mb-4">Sign up</button>
+    <div v-if="error" class="text-danger">{{ error }}</div>
   </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Jumbotron -->
+</section>
+  
 </template>
 
 <script>

@@ -146,16 +146,18 @@
                   </router-link>
       </div>
       <div v-if="userRole == 'Admin'" class="card my-5">
-        <h1 class="my-5">Admin Dashboard</h1>
+        <div class="d-flex justify-content-between align-items-center px-3">
+          <h1 class="my-5">Admin Dashboard</h1>
 
-        <router-link :to="{name: 'ActivityLog'}"
-                                class="w-100 btn btn-sm btn-primary my-3">
-                                      View Activity Log >> 
-        </router-link>
+          <router-link :to="{name: 'ActivityLog'}"
+                                  class="btn btn-sm btn-primary my-3">
+                                        View Activity Log >> 
+          </router-link>
+        </div>
 
             <div class="card-body">
                 <div class="row gy-5">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="text-center">Categories</h4>
@@ -172,7 +174,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="text-center">Cities</h4>
@@ -189,7 +191,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="text-center">JobPosts</h4>
@@ -202,7 +204,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="text-center">Client Details</h4>
@@ -215,7 +217,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="text-center">Freelancer Details</h4>
@@ -228,7 +230,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="text-center">Manage Users</h4>
