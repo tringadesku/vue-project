@@ -1,51 +1,53 @@
 <template>
   <div class="justify-content-center">
-
     <h3>Search JobPosts:</h3>
     <input v-model="searchQuery" @input="searchJobPosts()" type="text" placeholder="Search job posts...">
       <!-- Display jobpost list -->
       <h1>Show JobPosts</h1>
-      <div class="row">
-          <div class="col-md-12">
-              <div class="table-responsive">
-                  <table class="table table-striped">
-                      <thead class="table-dark">
-                          <tr>
-                              <th>Job Post Name</th>
-                              <th>Job Post Budget</th>
-                              <th>Job Post Description</th>
-                              <th>Job Application Deadline</th>
-                              <th>Job Category</th>
-                              <th>Job Client</th>
-                              <th></th>
-                              <th></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr v-for="jobpost in JobPosts" :key="jobpost._id">
-                              <td>{{ jobpost.jobPostName }}</td>
-                              <td>{{ jobpost.jobPostBudget }}€</td>
-                              <td>{{ jobpost.jobPostDescription }}</td>
-                              <td>{{ jobpost.jobApplicationDeadline }}</td>
-                              <td>{{ jobpost.jobCategory }}</td>
-                              <td>{{ jobpost.clientName }}</td>
-                              <td>
-                                <router-link :to="{name: 'ViewClientProfile', params: {id: jobpost.clientId}}"
-                                  class="btn btn-success me-2">
+
+      <div class="card">
+        <div class="card-body">
+            <div class="row gy-3">
+              <div class="col-md-3" v-for="jobpost in JobPosts" :key="jobpost._id">
+              
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ jobpost.jobPostName }}</h5>
+                    <h6 class="card-title">{{ jobpost.jobCategory }} | {{ jobpost.clientName }}</h6>
+                    <p class="card-text" id="FreelancerDescriptionCss">{{ jobpost.jobPostDescription }}</p>
+
+                    <hr class="hr" />
+
+                    <div class="d-flex justify-content-between mb-2">
+                                    <div class="p fw-bold">Deadline</div>
+                                    <div class="p">{{ jobpost.jobApplicationDeadline }}</div>
+                    </div>
+
+                    <hr class="hr" />
+
+                    <div class="d-flex justify-content-between mb-2">
+                                    <div class="p fw-bold">Budget</div>
+                                    <div class="p">{{ jobpost.jobPostBudget }} €</div>
+                    </div>
+
+                    <hr class="hr" />
+                    <router-link :to="{name: 'ViewClientProfile', params: {id: jobpost.clientId}}"
+                                  class="btn btn-primary btn-sm mb-1" style="width:100%;">
                                       View Client Profile
                                   </router-link>
-                              </td>
-                              <td>
-                                <button v-if="userRole == 'Freelancer' &&  hasApplied(jobpost._id)" @click="unapply(jobpost._id)">Unapply</button>
-                                <button v-if="userRole == 'Freelancer' &&  !hasApplied(jobpost._id)" @click="applyJobPost(jobpost._id)">Apply</button>
-                              </td>
-                          </tr>
-                      </tbody>
-                  </table>
+
+                                  <button v-if="userRole == 'Freelancer' &&  hasApplied(jobpost._id)" @click="unapply(jobpost._id)" class="btn btn-outline-primary btn-sm" style="width:100%;">Unapply</button>
+                                <button v-if="userRole == 'Freelancer' &&  !hasApplied(jobpost._id)" @click="applyJobPost(jobpost._id)" class="btn btn-primary btn-sm" style="width:100%;">Apply</button>
+                  </div>
+                </div>
+
               </div>
-          </div>
+            </div>
+        </div>
       </div>
   </div>
+
+
 </template>
 
 <script>

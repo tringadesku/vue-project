@@ -1,4 +1,5 @@
 <template>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <div class="justify-content-center">
 
     <div v-if="userRole == undefined" class="px-4 py-5 text-center" style="margin-top:100px;margin-bottom:100px">
@@ -12,69 +13,95 @@
         </div>
     </div>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <div v-if="userRole == 'Freelancer' || userRole == 'Client'" class="slider">
-      <h1>Qitu pls sliderin qe mundesh me ndreq, links t fotov ti kom lon te data poshte te array images</h1>
+                <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="https://publitas.com/wp-content/uploads/2023/01/how-to-amplify-word-of-mouth-marketing-with-online-catalogues.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="https://t3.ftcdn.net/jpg/02/33/12/44/360_F_233124436_78mVMPy74gldjeo6rdyJgRklPIGSAwl7.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="https://images.squarespace-cdn.com/content/v1/5f78e89c7ec702130762b178/1619791419750-OXMONJ7MO1SW0I2FGLIY/JoinOurTeam_Header.jpeg" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
   </div>
   
     <div v-if="userRole == 'Freelancer'">
+      <div class="d-flex mb-3 justify-content-between align-items-center my-4">
       <h3>Latest Job Posts: </h3>
-      <table class="table table-striped">
-                      <thead class="table-dark">
-                          <tr>
-                              <th>Job Post Name</th>
-                              <th>Job Post Budget</th>
-                              <th>Job Post Description</th>
-                              <th>Job Application Deadline</th>
-                              <th>Job Category</th>
-                              <th>Job Client</th>
-                              <th></th>
-                              <th></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr v-for="jobpost in JobPosts" :key="jobpost._id">
-                              <td>{{ jobpost.jobPostName }}</td>
-                              <td>{{ jobpost.jobPostBudget }}€</td>
-                              <td>{{ jobpost.jobPostDescription }}</td>
-                              <td>{{ jobpost.jobApplicationDeadline }}</td>
-                              <td>{{ jobpost.jobCategory }}</td>
-                              <td>{{ jobpost.clientName }}</td>
-                              <td>
-                                <router-link :to="{name: 'ViewClientProfile', params: {id: jobpost.clientId}}"
-                                  class="btn btn-success me-2">
-                                      View Client Profile
-                                  </router-link>
-                              </td>
-                              <td>
-                                <button v-if="userRole == 'Freelancer' &&  hasApplied(jobpost._id)" @click="unapply(jobpost._id)">Unapply</button>
-                                <button v-if="userRole == 'Freelancer' &&  !hasApplied(jobpost._id)" @click="applyJobPost(jobpost._id)">Apply</button>
-                              </td>
-                          </tr>
-                      </tbody>
-                  </table>
-
-                  <router-link :to="{name: 'JobPosts'}"
-                                  class="btn btn-success me-2">
+      <router-link :to="{name: 'JobPosts'}"
+                  class="btn btn-primary">
                                       View All Job Posts >> 
                   </router-link>
+                  </div>
+      <div class="card">
+        <div class="card-body">
+            <div class="row gy-3">
+              <div class="col-md-3" v-for="jobpost in JobPosts" :key="jobpost._id">
+              
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ jobpost.jobPostName }}</h5>
+                    <h6 class="card-title">{{ jobpost.jobCategory }} | {{ jobpost.clientName }}</h6>
+                    <p class="card-text" id="FreelancerDescriptionCss">{{ jobpost.jobPostDescription }}</p>
 
+                    <hr class="hr" />
 
+                    <div class="d-flex justify-content-between mb-2">
+                                    <div class="p fw-bold">Deadline</div>
+                                    <div class="p">{{ jobpost.jobApplicationDeadline }}</div>
+                    </div>
+
+                    <hr class="hr" />
+
+                    <div class="d-flex justify-content-between mb-2">
+                                    <div class="p fw-bold">Budget</div>
+                                    <div class="p">{{ jobpost.jobPostBudget }} €</div>
+                    </div>
+
+                    <hr class="hr" />
+                    <router-link :to="{name: 'ViewClientProfile', params: {id: jobpost.clientId}}"
+                                  class="btn btn-primary btn-sm mb-1" style="width:100%;">
+                                      View Client Profile
+                                  </router-link>
+
+                                  <button v-if="userRole == 'Freelancer' &&  hasApplied(jobpost._id)" @click="unapply(jobpost._id)" class="btn btn-outline-primary btn-sm" style="width:100%;">Unapply</button>
+                                <button v-if="userRole == 'Freelancer' &&  !hasApplied(jobpost._id)" @click="applyJobPost(jobpost._id)" class="btn btn-primary btn-sm" style="width:100%;">Apply</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+        </div>
+      </div>
+
+                  
+
+      <div class="d-flex mb-3 justify-content-between align-items-center my-4">
                   <h3>Suggested JobPosts for you: </h3>
+                  <button class="btn btn-primary">View All Suggested JobPosts >></button>
+                  </div>
                   <table class="table table-striped">
-                      <thead class="table-dark">
-                          <tr>
-                              <th>Job Post Name</th>
-                              <th>Job Post Budget</th>
-                              <th>Job Post Description</th>
-                              <th>Job Application Deadline</th>
-                              <th>Job Category</th>
-                              <th>Job Client</th>
-                              <th></th>
-                              <th></th>
-                          </tr>
-                      </thead>
                       <tbody>
-                          <tr v-for="job in SuggestedJobPosts" :key="job._id">
+                          <!-- <tr v-for="job in SuggestedJobPosts" :key="job._id">
                               <td>{{ job.jobPostName }}</td>
                               <td>{{ job.jobPostBudget }}€</td>
                               <td>{{ job.jobPostDescription }}</td>
@@ -91,11 +118,53 @@
                                 <button v-if="userRole == 'Freelancer' &&  hasApplied(job._id)" @click="unapply(job._id)">Unapply</button>
                                 <button v-if="userRole == 'Freelancer' &&  !hasApplied(job._id)" @click="applyJobPost(job._id)">Apply</button>
                               </td>
-                          </tr>
+                          </tr> -->
                       </tbody>
                   </table>
 
-                  <button>View All Suggested JobPosts >></button>
+                  <div class="card">
+        <div class="card-body">
+            <div class="row gy-3">
+              <div class="col-md-3" v-for="job in SuggestedJobPosts" :key="job._id">
+              
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ job.jobPostName }}</h5>
+                    <h6 class="card-title">{{ job.jobCategory }} | {{ job.clientName }}</h6>
+                    <p class="card-text" id="FreelancerDescriptionCss">{{ job.jobPostDescription }}</p>
+
+                    <hr class="hr" />
+
+                    <div class="d-flex justify-content-between mb-2">
+                                    <div class="p fw-bold">Deadline</div>
+                                    <div class="p">{{ job.jobApplicationDeadline }}</div>
+                    </div>
+
+                    <hr class="hr" />
+
+                    <div class="d-flex justify-content-between mb-2">
+                                    <div class="p fw-bold">Budget</div>
+                                    <div class="p">{{ job.jobPostBudget }} €</div>
+                    </div>
+
+                    <hr class="hr" />
+                    <router-link :to="{name: 'ViewClientProfile', params: {id: job.clientId}}"
+                                  class="btn btn-primary btn-sm mb-1" style="width:100%;">
+                                      View Client Profile
+                                  </router-link>
+
+                                  <button v-if="userRole == 'Freelancer' &&  hasApplied(job._id)" @click="unapply(job._id)" class="btn btn-outline-primary btn-sm" style="width:100%;">Unapply</button>
+                                <button v-if="userRole == 'Freelancer' &&  !hasApplied(job._id)" @click="applyJobPost(job._id)" class="btn btn-primary btn-sm" style="width:100%;">Apply</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+        </div>
+      </div>
+
+                  
+
     </div>
 
     <div v-if="userRole == 'Client'">

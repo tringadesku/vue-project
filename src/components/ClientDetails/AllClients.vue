@@ -5,21 +5,11 @@
     <input v-model="searchQuery" @input="searchClientDetails()" type="text" placeholder="Search client details...">
       <!-- Display jobpost list -->
       <h1>Clients</h1>
-      <div class="row">
+      <!-- <div class="row">
           <div class="col-md-12">
               <div class="table-responsive">
                   <table class="table table-striped">
                     <thead class="table-dark">
-                          <tr>
-                              <th>First Name</th>
-                              <th>Last Name</th>
-                              <th>Company</th>
-                              <th>Position</th>
-                              <th>City</th>
-                              <th>Description</th>
-                              <th>Profile Pic</th>
-                              <th></th>
-                          </tr>
                       </thead>
                       <tbody>
                           <tr v-for="cd in ClientDetails" :key="cd._id">
@@ -43,7 +33,38 @@
                   </table>
               </div>
           </div>
-      </div>
+      </div> -->
+
+
+      <div class="card my-3">
+        <div class="card-body">
+            <div class="row gy-3">
+
+                  <div class="col-md-3" v-for="cd in ClientDetails" :key="cd._id">
+                            <div class="card">
+                                <div class="card-body">
+
+
+                                  <img :src="'/uploads/' + cd.profileImg" alt="Profile Image" style="width:100px;">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h3>{{ cd.firstName }} {{ cd.lastName }}</h3>
+                                    </div>
+
+                                    <h5 class="card-title">{{ cd.position }} at <span class="fw-bold">{{ cd.companyName }}</span> | {{ cd.city }}</h5>
+                                    <p class="card-text">{{ cd.description }}</p>
+                                
+                                <router-link :to="{name: 'ViewClientProfile', params: {id: cd.clientId}}"
+                                class="btn btn-success w-100">
+                                      View Profile
+                                  </router-link>
+                                </div>
+                            </div>
+                        </div>
+
+
+            </div>
+        </div>
+    </div>
   </div>
 </template>
 
