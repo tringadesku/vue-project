@@ -1,90 +1,81 @@
 <template>
-    <div class="justify-content-center">
-        <!-- Display jobpost list -->
-        <h1></h1>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                      <thead class="table-dark">
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Company</th>
-                                <th>Position</th>
-                                <th>City</th>
-                                <th>Description</th>
-                                <th>Profile Pic</th>
-                                <th>
-                                  <router-link to="/createClientDetail" v-if="ClientDetails.at(0) == null" class="btn btn-secondary px-3">Add Profile Details</router-link>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody v-if="ClientDetails.at(0) != null">
-                            <tr v-for="cd in ClientDetails" :key="cd._id">
-                                <td>{{ cd.firstName }}</td>
-                                <td>{{ cd.lastName }}</td>
-                                <td>{{ cd.companyName }}</td>
-                                <td>{{ cd.position }}</td>
-                                <td>{{ cd.city }}</td>
-                                <td>{{ cd.description }}</td>
-                                <td><img :src="'/uploads/' + cd.profileImg" alt="Profile Image"></td>
-                                <td>
-                                  <router-link :to="{name: 'EditClientDetail', params: {id: cd._id}}"
-                                    class="btn btn-success me-2">
+
+    <div class="row">
+        <div class="col-4">
+            <router-link to="/createClientDetail" v-if="ClientDetails.at(0) == null" class="btn btn-secondary px-3">Add Profile Details</router-link>
+            <div class="card" v-if="ClientDetails.at(0) != null">
+                <div class="card-body" v-for="cd in ClientDetails" :key="cd._id">
+                    <img :src="'/uploads/' + cd.profileImg" alt="Profile Image" style="width:100px;">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h3>{{ cd.firstName }} {{ cd.lastName }}</h3>
+                        <router-link :to="{name: 'EditClientDetail', params: {id: cd._id}}"
+                        class="btn btn-primary btn-sm">
                                         Edit
                                     </router-link>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    </div>
+
+                    <h5 class="card-title">{{ cd.position }} at <span class="fw-bold">{{ cd.companyName }}</span> | {{ cd.city }}</h5>
+                    <p class="card-text">{{ cd.description }}</p>
                 </div>
-  
-                <h2>My Job Posts:</h2>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Job Post Name</th>
-                                <th>Job Post Budget</th>
-                                <th>Job Post Description</th>
-                                <th>Job Application Deadline</th>
-                                <th>Job Category</th>
-                                <th>Job Client</th>
-                                <th>
-                                  <router-link to="/createJobPost" class="btn btn-secondary px-3">Create JobPost</router-link>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="jobpost in JobPosts" :key="jobpost._id">
-                                <td>{{ jobpost.jobPostName }}</td>
-                                <td>{{ jobpost.jobPostBudget }}€</td>
-                                <td>{{ jobpost.jobPostDescription }}</td>
-                                <td>{{ jobpost.jobApplicationDeadline }}</td>
-                                <td>{{ jobpost.jobCategory }}</td>
-                                <td>{{ jobpost.clientName }}</td>
-                                <td>
-                                    <router-link :to="{name: 'EditJobPost', params: {id: jobpost._id}}"
-                                    class="btn btn-success me-2">
-                                        Edit
-                                    </router-link>
+            </div>
+        </div>
+
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h3 class="Card Title">Job Posts</h3>
+                        <router-link to="/createJobPost" class="btn btn-primary">Create JobPost</router-link>
+                    </div>
+
+                    <div class="row gy-3">
+                        <div class="col-md-4" v-for="jobpost in JobPosts" :key="jobpost._id">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ jobpost.jobPostName }}</h5>
+                                    <h6 class="card-title">{{ jobpost.jobCategory }}</h6>
+                                    <p class="card-text">{{ jobpost.jobPostDescription }}</p>
+
+                                    <hr class="hr"/>
+
+                                    <div class="d-flex justify-content-between mb-2">
+                                            <div class="p fw-bold">Application Deadline</div>
+                                            <div class="p">{{ jobpost.jobApplicationDeadline }}</div>
+                                    </div>
+
+                                    <hr class="hr" />
+
+                                    <div class="d-flex justify-content-between mb-2">
+                                            <div class="p fw-bold">Budget</div>
+                                            <div class="p">{{ jobpost.jobPostBudget }} €</div>
+                                    </div>
+
                                     <router-link :to="{name: 'JobApplicants', params: {id: jobpost._id}}"
-                                    class="btn btn-primary me-2">
+                                    class="btn btn-primary btn-sm mb-1" style="width:100%;">
                                         View Applicants
                                     </router-link>
                                     <router-link :to="{name: 'SuggestedFreelancers', params: {jobCategory: jobpost.jobCategory}}"
-                                    class="btn btn-primary me-2">
+                                    class="btn btn-outline-primary btn-sm" style="width:100%;">
                                          Suggested Freelancers
                                     </router-link>
-                                    <button @click.prevent="deleteJobPost(jobpost._id, jobpost.jobPostName)"
-                                    class="btn btn-danger">
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                                    <hr class="hr" />
+
+                                    <div class="d-flex justify-content-between">
+                                            <router-link :to="{name: 'EditJobPost', params: {id: jobpost._id}}"
+                                            class="btn btn-warning btn-sm" style="width:40%;">
+                                            Edit
+                                        </router-link>
+                                        <button @click.prevent="deleteJobPost(jobpost._id, jobpost.jobPostName)"
+                                        class="btn btn-danger btn-sm ms-1" style="width:40%;">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
