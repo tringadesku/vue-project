@@ -1,65 +1,80 @@
 <template>
-  <div class="justify-content-center">
-      <!-- Display jobpost list -->
-      <h1></h1>
-      <div class="row">
-          <div class="col-md-12">
-              <div class="table-responsive">
-                  <table class="table table-striped">
-                    <thead class="table-dark">
-                          <tr>
-                              <th>First Name2</th>
-                              <th>Last Name</th>
-                              <th>City</th>
-                              <th>Category</th>
-                              <th>Education</th>
-                              <th>Experience</th>
-                              <th>Hourly Rate</th>
-                              <th>Profile Pic</th>
-                          </tr>
-                      </thead>
-                      <tbody v-if="FreelancerDetails.at(0) != null">
-                          <tr v-for="cd in FreelancerDetails" :key="cd._id">
-                              <td>{{ cd.firstName }}</td>
-                              <td>{{ cd.lastName }}</td>
-                              <td>{{ cd.city }}</td>
-                              <td>{{ cd.jobCategory }}</td>
-                              <td>{{ cd.education }}</td>
-                              <td>{{ cd.experience }}</td>
-                              <td>{{ cd.hourlyRate }}</td>
-                              <td><img :src="'/uploads/' + cd.profileImg" alt="Profile Image"></td>
+  
+  <div class="container mt-4 mb-4">
+        <div class="row">
+            <div class="col-4" v-if="FreelancerDetails.at(0) == null">
+                <router-link to="/createFreelancerDetail" class="btn btn-primary px-3">Add Profile Details</router-link>
+            </div>
+            
+            <div class="col-4" v-if="FreelancerDetails.at(0) != null">
+                <div class="card" v-for="cd in FreelancerDetails" :key="cd._id">
+                    <div class="card-body">
+                        <img :src="'/uploads/' + cd.profileImg" alt="Profile Image" style="width:100px;">
+                        <h3 class="card-title">{{ cd.firstName }} {{ cd.lastName }}</h3>
+                        
 
-                          </tr>
-                      </tbody>
-                  </table>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h4 class="card-title">Details</h4>
+                        </div>
 
-                  <h2>{{ FreelancerDetails.at(0).firstName }}'s Projects:</h2>
-                  <table class="table table-striped">
-                      <thead class="table-dark">
-                          <tr>
-                              <th>Project</th>
-                              <th>Category</th>
-                              <th>Description</th>
-                              <th>Website</th>
-                              <th>Picture</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr v-for="freelancerproject in FreelancerProjects" :key="freelancerproject._id">
-                              <td>{{ freelancerproject.projectName }}</td>
-                              <td>{{ freelancerproject.jobCategory}}</td>
-                              <td>{{ freelancerproject.projectDescription }}</td>
-                              <td><a :href=freelancerproject.projectWebsite>Visit Website</a></td>
-                              <td><img :src=freelancerproject.fileName alt="Project Thumbnail"></td>
-                          </tr>
-                      </tbody>
-                  </table>
 
-              </div>
-          </div>
-      </div>
-  </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="p fw-bold">Field</div>
+                            <div class="p">{{ cd.jobCategory }}</div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="p fw-bold">Hourly Rate</div>
+                            <div class="p">{{ cd.hourlyRate }} €</div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="p fw-bold">Location</div>
+                            <div class="p">{{ cd.city }}</div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="p fw-bold">Education</div>
+                            <div class="p">{{ cd.education }}</div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="p fw-bold">Experience</div>
+                            <div class="p">{{ cd.experience }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between mb-3">
+                            <h3 class="Card Title">Projects</h3>
+                        </div>
+
+                        <div class="row gy-3">
+                            <div class="col-md-4" v-for="freelancerproject in FreelancerProjects" :key="freelancerproject._id">
+                                <div class="card">
+                                    <img :src=freelancerproject.fileName alt="Project Thumbnail" style="aspect-ratio:2/1;" class="card-img-top">
+                                    <div class="card-body">
+                                    <h5 class="card-title">{{ freelancerproject.projectName }}</h5>
+                                    <p class="card-text">{{ freelancerproject.projectDescription }}</p>
+
+                                    <a :href=freelancerproject.projectWebsite class="btn btn-primary w-100">Visit Website</a>
+                                </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
+
 
 <script>
 import axios from "axios";
