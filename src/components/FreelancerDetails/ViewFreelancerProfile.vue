@@ -8,7 +8,7 @@
                   <table class="table table-striped">
                     <thead class="table-dark">
                           <tr>
-                              <th>First Name</th>
+                              <th>First Name2</th>
                               <th>Last Name</th>
                               <th>City</th>
                               <th>Category</th>
