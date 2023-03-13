@@ -7,6 +7,7 @@ import MyJobPosts from "@/components/JobPosts/MyJobPosts.vue";
 import JobApplicants from "@/components/JobPosts/JobApplicants.vue";
 import MyJobApplications from "@/components/JobPosts/MyJobApplications.vue";
 import JobPosts from "@/components/JobPosts/JobPosts.vue";
+import SuggestedJobs from "@/components/JobPosts/SuggestedJobs.vue";
 import ManageUsers from "@/components/Admin/ManageUsers.vue";
 
 import CreateClientDetail from "@/components/ClientDetails/CreateClientDetail.vue";
@@ -136,6 +137,12 @@ const routes = [
     path: "/JobPosts",
     name: "JobPosts",
     component: JobPosts,
+    //meta: { requiresAuth: true }
+  },
+  {
+    path: "/SuggestedJobs",
+    name: "SuggestedJobs",
+    component: SuggestedJobs,
     //meta: { requiresAuth: true }
   },
   {

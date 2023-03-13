@@ -16,11 +16,11 @@ jobPostRoute.route('/getJobs').get((req, res, next) => {
     })
 })
 
-// get three latest jobposts
+// get four latest jobposts
 jobPostRoute.route('/getLatestJobs').get((req, res, next) => {
   JobPostModel.find()
       .sort({ creationDate: -1 })
-      .limit(3)
+      .limit(4)
       .exec((error, data) => {
           if (error) {
               return next(error);
@@ -133,7 +133,7 @@ jobPostRoute.route('/getLatestSuggestedJobs').get((req, res, next) => {
 
   JobPostModel.find({ jobCategory: jobCategory })
   .sort({ creationDate: -1 })
-  .limit(3).exec((error, data) => {
+  .limit(4).exec((error, data) => {
     if (error) {
         return next(error);
     } else {

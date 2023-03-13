@@ -97,7 +97,10 @@
 
       <div class="d-flex mb-3 justify-content-between align-items-center my-4">
                   <h3>Suggested JobPosts for you: </h3>
-                  <button class="btn btn-primary">View All Suggested JobPosts >></button>
+                  <router-link :to="{name: 'SuggestedJobs'}"
+                  class="btn btn-primary">
+                                      View All Suggested Job Posts >> 
+                  </router-link>
                   </div>
                   <table class="table table-striped">
                       <tbody>

@@ -1,14 +1,12 @@
 <template>
   <div class="justify-content-center">
-    <h3>Search JobPosts:</h3>
-    <input v-model="searchQuery" @input="searchJobPosts()" type="text" placeholder="Search job posts...">
       <!-- Display jobpost list -->
-      <h1>Show JobPosts</h1>
+      <h1>Suggested JobPosts for you: </h1>
 
       <div class="card">
         <div class="card-body">
             <div class="row gy-3">
-              <div class="col-md-3" v-for="jobpost in JobPosts" :key="jobpost._id">
+              <div class="col-md-3" v-for="jobpost in SuggestedJobPosts" :key="jobpost._id">
               
                 <div class="card">
                   <div class="card-body">
@@ -58,7 +56,6 @@ var freelancerId = localStorage.getItem('userId')
 export default {
   data() {
       return {
-          JobPosts: [],
           SuggestedJobPosts: [],
           JobApplications: [],
           userRole: localStorage.getItem('userRole')
