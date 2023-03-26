@@ -2,31 +2,7 @@
   <div class="row justify-content-center">
       <div class="col-md-12">
           <!-- edit here -->
-          <h1>Job:</h1>
-          <table class="table table-striped">
-                      <thead class="table-dark">
-                          <tr>
-                              <th>Job Post Name</th>
-                              <th>Job Post Budget</th>
-                              <th>Job Post Description</th>
-                              <th>Job Application Deadline</th>
-                              <th>Job Category</th>
-                              <th>Job Client</th>
-                              <th></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr>
-                              <td>{{ jobPost.jobPostName }}</td>
-                              <td>{{ jobPost.jobPostBudget }}€</td>
-                              <td>{{ jobPost.jobPostDescription }}</td>
-                              <td>{{ jobPost.jobApplicationDeadline }}</td>
-                              <td>{{ jobPost.jobCategory }}</td>
-                              <td>{{ jobPost.clientName }}</td>
-                          </tr>
-                      </tbody>
-                  </table>
-                  <h3>Applicants:</h3>
+          <h1>Applicants for '{{ jobName }}'</h1>
                   <table class="table table-striped">
                     <thead class="table-dark">
                           <tr>
@@ -73,9 +49,11 @@ export default {
   data() {
       return {
           jobPost: {},
+          archivedJobPost: {},
           categories: [],
           applicants: [],
-          freelancers: []
+          freelancers: [],
+          jobName: this.$route.params.jobName
       }
   },
   created() {

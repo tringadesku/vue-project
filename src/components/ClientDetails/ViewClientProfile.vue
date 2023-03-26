@@ -50,7 +50,7 @@
                               <td>{{ jobpost.jobPostName }}</td>
                               <td>{{ jobpost.jobPostBudget }}€</td>
                               <td>{{ jobpost.jobPostDescription }}</td>
-                              <td>{{ jobpost.jobApplicationDeadline }}</td>
+                              <td>{{ formatDate(jobpost.jobApplicationDeadline) }}</td>
                               <td>{{ jobpost.jobCategory }}</td>
                               <td>{{ jobpost.clientName }}</td>
                               <td>
@@ -117,6 +117,15 @@ export default {
       })
   },
   methods: {
+    formatDate(dateString){
+      const date = new Date(dateString);
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear().toString().substr(-2);
+
+      return `${day}/${month}/${year}`;
+    },
+    
     applyJobPost(jobId) {
       let freelancerId = localStorage.getItem('userId');
       axios.post(`http://localhost:4000/api/apply`, { freelancerId, jobId })

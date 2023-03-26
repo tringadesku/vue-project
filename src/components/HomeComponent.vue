@@ -59,15 +59,18 @@
               
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title">{{ jobpost.jobPostName }}</h5>
-                    <h6 class="card-title">{{ jobpost.jobCategory }} | {{ jobpost.clientName }}</h6>
+                    <h5 class="card-title" :style="{ fontSize: jobpost.jobPostName.length > 20 ? '10px' : '18px' }">{{ jobpost.jobPostName }}</h5>
+                    <h6 class="card-title" :style="{ paddingBottom: jobpost.clientName.length + jobpost.jobCategory.length < 22 ? '16.5px' : '0' }">{{ jobpost.jobCategory }} | {{ jobpost.clientName }}</h6>
                     <p class="card-text" id="FreelancerDescriptionCss">{{ jobpost.jobPostDescription }}</p>
 
                     <hr class="hr" />
 
                     <div class="d-flex justify-content-between mb-2">
-                                    <div class="p fw-bold">Deadline</div>
-                                    <div class="p">{{ jobpost.jobApplicationDeadline }}</div>
+                               <div class="p fw-bold">Deadline</div>
+                               <div class="row">
+                                    <div class="p text-right">{{ formatDate(jobpost.jobApplicationDeadline) }}</div>
+                                    <div class="p text-right">{{ daysLeft(jobpost.jobApplicationDeadline) }}</div>
+                               </div>
                     </div>
 
                     <hr class="hr" />
@@ -132,15 +135,18 @@
               
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title">{{ job.jobPostName }}</h5>
-                    <h6 class="card-title">{{ job.jobCategory }} | {{ job.clientName }}</h6>
+                    <h5 class="card-title" :style="{ fontSize: job.jobPostName.length > 20 ? '10px' : '18px' }">{{ job.jobPostName }}</h5>
+                    <h6 class="card-title" :style="{ paddingBottom: job.clientName.length + job.jobCategory.length < 22 ? '16.5px' : '0' }">{{ job.jobCategory }} | {{ job.clientName }}</h6>
                     <p class="card-text" id="FreelancerDescriptionCss">{{ job.jobPostDescription }}</p>
 
                     <hr class="hr" />
 
                     <div class="d-flex justify-content-between mb-2">
                                     <div class="p fw-bold">Deadline</div>
-                                    <div class="p">{{ job.jobApplicationDeadline }}</div>
+                                    <div class="row">
+                                    <div class="p text-right">{{ formatDate(job.jobApplicationDeadline) }}</div>
+                                    <div class="p text-right">{{ daysLeft(job.jobApplicationDeadline) }}</div>
+                               </div>
                     </div>
 
                     <hr class="hr" />
@@ -435,7 +441,30 @@ export default{
 
     hasApplied(jobId) {
     return this.JobApplications.some(jobApp => jobApp.jobId === jobId);
-  }
+  },
+
+  formatDate(dateString){
+      const date = new Date(dateString);
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear().toString().substr(-2);
+
+      return `${day}/${month}/${year}`;
+    },
+
+    daysLeft(dateString) {
+        const deadline = new Date(dateString);
+        const now = new Date();
+        const diffTime = Math.abs(deadline - now);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays >= 1) {
+          return `${diffDays} day${diffDays > 1 ? 's' : ''} left`;
+        } 
+
+    },
+
+
 }
 }
 

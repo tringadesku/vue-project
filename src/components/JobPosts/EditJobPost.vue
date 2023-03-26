@@ -18,7 +18,7 @@
                 </div>
                 <div class="form-group">
                     <label for="jobApplicationDeadline">jobApplicationDeadline</label>
-                    <input type="date" class="form-control" v-model="jobPost.jobApplicationDeadline" required>
+                    <input type="text" class="form-control" v-model="jobPost.jobApplicationDeadline" required>
                 </div>
                 <div class="form-group">
                   <label for="jobCategory">Category:</label>
@@ -85,7 +85,7 @@
                   console.log(activity)
               })
   
-              this.$router.push('/listjobposts')
+              this.$router.push('/clientprofile')
             }).catch(error => {
                 console.log(error)
             })
