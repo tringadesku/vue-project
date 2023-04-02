@@ -25,9 +25,9 @@
                               <td>{{ cd.city }}</td>
                               <td>{{ cd.education }}</td>
                               <td>{{ cd.experience }}</td>
-                              <td>{{ cd.hourlyRate }}</td>
+                              <td>{{ cd.hourlyRate }} €</td>
                               <td>
-                              <img :src="'/uploads/' + cd.profileImg" alt="Profile Image">
+                              <img :src="'/uploads/' + cd.profileImg" alt="Profile Image" onerror="this.src='https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png';">
                               </td>
                               <td>
                                 <router-link :to="{name: 'ViewFreelancerProfile', params: {id: cd.freelancerId}}"

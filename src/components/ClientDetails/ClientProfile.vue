@@ -5,7 +5,7 @@
             <router-link to="/createClientDetail" v-if="ClientDetails.at(0) == null" class="btn btn-secondary px-3">Add Profile Details</router-link>
             <div class="card" v-if="ClientDetails.at(0) != null">
                 <div class="card-body" v-for="cd in ClientDetails" :key="cd._id">
-                    <img :src="'/uploads/' + cd.profileImg" alt="Profile Image" style="width:100px;">
+                    <img :src="'/uploads/' + cd.profileImg" alt="Profile Image" style="width:100px;" onerror="this.src='https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png';">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h3>{{ cd.firstName }} {{ cd.lastName }}</h3>
                         <router-link :to="{name: 'EditClientDetail', params: {id: cd._id}}"

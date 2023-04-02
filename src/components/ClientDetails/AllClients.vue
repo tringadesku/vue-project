@@ -45,7 +45,7 @@
                                 <div class="card-body">
 
 
-                                  <img :src="'/uploads/' + cd.profileImg" alt="Profile Image" style="width:100px;">
+                                  <img :src="'/uploads/' + cd.profileImg" alt="Profile Image" style="width:100px;" onerror="this.src='https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png';">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                     <h3>{{ cd.firstName }} {{ cd.lastName }}</h3>
                                     </div>

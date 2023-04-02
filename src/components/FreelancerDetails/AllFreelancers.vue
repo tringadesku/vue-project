@@ -5,47 +5,39 @@
     <input v-model="searchQuery" @input="searchFreelancerDetails()" type="text" placeholder="Search freelancer details...">
       <!-- Display jobpost list -->
       <h1>Freelancers</h1>
-      <div class="row">
-          <div class="col-md-12">
-              <div class="table-responsive">
-                  <table class="table table-striped">
-                    <thead class="table-dark">
-                          <tr>
-                              <th>First Name</th>
-                              <th>Last Name</th>
-                              <th>Category</th>
-                              <th>City</th>
-                              <th>Education</th>
-                              <th>Experience</th>
-                              <th>Hourly Rate</th>
-                               <th>Profile Pic</th>
-                              <th></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr v-for="cd in FreelancerDetails" :key="cd._id">
-                              <td>{{ cd.firstName }}</td>
-                              <td>{{ cd.lastName }}</td>
-                              <td>{{ cd.jobCategory }}</td>
-                              <td>{{ cd.city }}</td>
-                              <td>{{ cd.education }}</td>
-                              <td>{{ cd.experience }}</td>
-                              <td>{{ cd.hourlyRate }}</td>
-                              <td>
-                              <img :src="'/uploads/' + cd.profileImg" alt="Profile Image">
-                              </td>
-                              <td>
+      <div class="card my-3">
+        <div class="card-body">
+            <div class="row gy-3">
+
+                  <div class="col-md-3" v-for="cd in FreelancerDetails" :key="cd._id">
+                            <div class="card">
+                                <div class="card-body">
+
+
+                                  <img :src="'/uploads/' + cd.profileImg" alt="Profile Image" style="width:100px;" onerror="this.src='https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png';">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h3>{{ cd.firstName }} {{ cd.lastName }}</h3>
+                                    </div>
+
+                                    <h5 class="card-title">{{ cd.jobCategory }}, {{ cd.city }}</h5>
+                                    <div class="d-flex justify-content-between mb-2">
+                                            <div class="p fw-semibold">Hourly Rate</div>
+                                            <div class="p">{{ cd.hourlyRate }} €</div>
+                                    </div>
+                                
                                 <router-link :to="{name: 'ViewFreelancerProfile', params: {id: cd.freelancerId}}"
-                                  class="btn btn-success me-2">
+                                class="btn btn-success w-100">
                                       View Profile
                                   </router-link>
-                              </td>
-                          </tr>
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-      </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+            </div>
+        </div>
+    </div>
+
   </div>
 </template>
 
