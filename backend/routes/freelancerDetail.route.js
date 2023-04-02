@@ -30,9 +30,9 @@ freelancerDetailRoute.route('/getFreelancerDetails').get((req, res, next) => {
   })
 })
 
-//get only 4 freelancers
+//get only 3 freelancers
 freelancerDetailRoute.route('/getFourFreelancers').get((req, res, next) => {
-  FreelancerDetailModel.find().limit(4).exec((error, data) => {
+  FreelancerDetailModel.find().limit(3).exec((error, data) => {
     if (error) {
       return next(error);
     } else {

@@ -1,40 +1,33 @@
 <template>
     <div class="justify-content-center">
         <!-- Display jobpost list -->
-        <h1>Show Projects</h1>
+        <h1>Freelancer Projects</h1>
         <div class="row">
             <div class="col-md-12">
-                <div class="table-responsive">
-                  <table class="table table-striped">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Project</th>
-                                <th>Category</th>
-                                <th>Description</th>
-                                <th>Website</th>
-                                <th>Picture</th>
-                                <th>Freelancer</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="freelancerproject in FreelancerProjects" :key="freelancerproject._id">
-                                <td>{{ freelancerproject.projectName }}</td>
-                                <td>{{ freelancerproject.jobCategory}}</td>
-                                <td>{{ freelancerproject.projectDescription }}</td>
-                                <td><a :href=freelancerproject.projectWebsite>Visit Website</a></td>
-                                <td><img :src=freelancerproject.fileName alt="Project Thumbnail"></td>
-                                <td>{{ freelancerproject.freelancerName}}</td>
-                                <td>
-                                  <router-link :to="{name: 'ViewFreelancerProfile', params: {id: freelancerproject.freelancerId}}"
+                <div class="row gy-3">
+                            <div class="col-md-3" v-for="freelancerproject in FreelancerProjects" :key="freelancerproject._id">
+                                <div class="card">
+                                    <img :src=freelancerproject.fileName alt="Project Thumbnail" style="aspect-ratio:2/1;" class="card-img-top" onerror="this.src='https://waterfieldtech.com/wp-content/uploads/2019/02/placeholder-image-gray-3x2.png';">
+                                    <div class="card-body">
+                                    <h5 class="card-title">{{ freelancerproject.projectName }}</h5>
+                                    <p class="card-text">{{ freelancerproject.projectDescription }}</p>
+
+                                    <a :href=freelancerproject.projectWebsite class="btn btn-primary w-100">Visit Website</a>
+
+                                    <hr class="hr"/>
+                                    
+                                    <div class="d-flex justify-content-between">
+                                        <h5>{{ freelancerproject.freelancerName}}</h5>
+                                    <router-link :to="{name: 'ViewFreelancerProfile', params: {id: freelancerproject.freelancerId}}"
                                     class="btn btn-success me-2">
                                         View Profile
                                     </router-link>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                    </div>
+                                </div>
+                                </div>
+                                
+                            </div>
+                        </div>
             </div>
         </div>
     </div>

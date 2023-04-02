@@ -26,6 +26,7 @@ const cityAPI = require('./routes/city.route');
 const lastLoginAPI = require('./routes/lastLogin.route');
 const freelancerProjectAPI = require('./routes/freelancerProject.route');
 const activityAPI = require('./routes/activity.route');
+const archivedJobAPI = require('./routes/archivedJob.route');
 
 const app = express();
 app.use(bodyParser.json());
@@ -40,7 +41,7 @@ app.use(cors());
 app.use(express.static('public'));
 
 // API
-app.use('/api', jobPostAPI, categoriesAPI, clientDetailAPI, freelancerDetailAPI, jobApplicationAPI, cityAPI, lastLoginAPI, freelancerProjectAPI, activityAPI);
+app.use('/api', jobPostAPI, categoriesAPI, clientDetailAPI, freelancerDetailAPI, jobApplicationAPI, cityAPI, lastLoginAPI, freelancerProjectAPI, activityAPI, archivedJobAPI);
 
 // CREATE PORT
 const port = process.env.PORT || 4000;

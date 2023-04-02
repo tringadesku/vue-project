@@ -1,69 +1,66 @@
 <template>
-  <div class="justify-content-center">
-      <!-- Display jobpost list -->
-      <h1></h1>
       <div class="row">
-          <div class="col-md-12">
-              <div class="table-responsive">
-                  <table class="table table-striped">
-                    <thead class="table-dark">
-                          <tr>
-                              <th>First Name</th>
-                              <th>Last Name</th>
-                              <th>Company</th>
-                              <th>Position</th>
-                              <th>City</th>
-                              <th>Description</th>
-                              <th>Profile Pic</th>
-                          </tr>
-                      </thead>
-                      <tbody v-if="ClientDetails.at(0) != null">
-                          <tr v-for="cd in ClientDetails" :key="cd._id">
-                              <td>{{ cd.firstName }}</td>
-                              <td>{{ cd.lastName }}</td>
-                              <td>{{ cd.companyName }}</td>
-                              <td>{{ cd.position }}</td>
-                              <td>{{ cd.city }}</td>
-                              <td>{{ cd.description }}</td>
-                              <td><img :src="'/uploads/' + cd.profileImg" alt="Profile Image"></td>
-                          </tr>
-                      </tbody>
-                  </table>
-              </div>
+        <div class="col-4">
+           
+            <div class="card" v-if="ClientDetails.at(0) != null">
+                <div class="card-body" v-for="cd in ClientDetails" :key="cd._id">
+                    <img :src="'/uploads/' + cd.profileImg" alt="Profile Image" style="width:100px;" onerror="this.src='https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png';">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h3>{{ cd.firstName }} {{ cd.lastName }}</h3>
+                    </div>
 
-            <h2>{{ ClientDetails.at(0).firstName }}'s Job Posts:</h2>
-              <div class="table-responsive">
-                  <table class="table table-striped">
-                      <thead class="table-dark">
-                          <tr>
-                              <th>Job Post Name</th>
-                              <th>Job Post Budget</th>
-                              <th>Job Post Description</th>
-                              <th>Job Application Deadline</th>
-                              <th>Job Category</th>
-                              <th>Job Client</th>
-                              <th v-if="userRole == 'Freelancer'"></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr v-for="jobpost in JobPosts" :key="jobpost._id">
-                              <td>{{ jobpost.jobPostName }}</td>
-                              <td>{{ jobpost.jobPostBudget }}€</td>
-                              <td>{{ jobpost.jobPostDescription }}</td>
-                              <td>{{ jobpost.jobApplicationDeadline }}</td>
-                              <td>{{ jobpost.jobCategory }}</td>
-                              <td>{{ jobpost.clientName }}</td>
-                              <td>
-                                <button v-if="userRole == 'Freelancer' &&  hasApplied(jobpost._id)" @click="unapply(jobpost._id)">Unapply</button>
-                                <button v-if="userRole == 'Freelancer' &&  !hasApplied(jobpost._id)" @click="applyJobPost(jobpost._id)">Apply</button>
-                              </td>
-                          </tr>
-                      </tbody>
-                  </table>
-              </div>
+                    <h5 class="card-title">{{ cd.position }} at <span class="fw-bold">{{ cd.companyName }}</span> | {{ cd.city }}</h5>
+                    <p class="card-text">{{ cd.description }}</p>
+                </div>
+            </div>
           </div>
-      </div>
-  </div>
+
+          <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h3 class="Card Title">Job Posts</h3>
+                    </div>
+
+                    <div class="row gy-3">
+                        <div class="col-md-4" v-for="jobpost in JobPosts" :key="jobpost._id">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ jobpost.jobPostName }}</h5>
+                                    <h6 class="card-title">{{ jobpost.jobCategory }}</h6>
+                                    <p class="card-text">{{ jobpost.jobPostDescription }}</p>
+
+                                    <hr class="hr"/>
+
+                                    <div class="d-flex justify-content-between mb-2">
+                                            <div class="p fw-bold">Application Deadline</div>
+                                            <div class="row">
+                                                <div class="p text-right">{{ formatDate(jobpost.jobApplicationDeadline) }}</div>
+                                             </div>
+                                    </div>
+
+                                    <hr class="hr" />
+
+                                    <div class="d-flex justify-content-between mb-2">
+                                            <div class="p fw-bold">Budget</div>
+                                            <div class="p">{{ jobpost.jobPostBudget }} €</div>
+                                    </div>
+
+                                    <hr class="hr" />
+
+                                 <button v-if="userRole == 'Freelancer' &&  hasApplied(jobpost._id)" @click="unapply(jobpost._id)" class="btn btn-outline-primary btn-sm" style="width:100%;">Unapply</button>
+                                 <button v-if="userRole == 'Freelancer' &&  !hasApplied(jobpost._id)" @click="applyJobPost(jobpost._id)" class="btn btn-primary btn-sm" style="width:100%;">Apply</button>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
 </template>
 
 <script>
@@ -117,6 +114,15 @@ export default {
       })
   },
   methods: {
+    formatDate(dateString){
+      const date = new Date(dateString);
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear().toString().substr(-2);
+
+      return `${day}/${month}/${year}`;
+    },
+    
     applyJobPost(jobId) {
       let freelancerId = localStorage.getItem('userId');
       axios.post(`http://localhost:4000/api/apply`, { freelancerId, jobId })

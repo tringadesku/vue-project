@@ -2,31 +2,7 @@
   <div class="row justify-content-center">
       <div class="col-md-12">
           <!-- edit here -->
-          <h1>Job:</h1>
-          <table class="table table-striped">
-                      <thead class="table-dark">
-                          <tr>
-                              <th>Job Post Name</th>
-                              <th>Job Post Budget</th>
-                              <th>Job Post Description</th>
-                              <th>Job Application Deadline</th>
-                              <th>Job Category</th>
-                              <th>Job Client</th>
-                              <th></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr>
-                              <td>{{ jobPost.jobPostName }}</td>
-                              <td>{{ jobPost.jobPostBudget }}€</td>
-                              <td>{{ jobPost.jobPostDescription }}</td>
-                              <td>{{ jobPost.jobApplicationDeadline }}</td>
-                              <td>{{ jobPost.jobCategory }}</td>
-                              <td>{{ jobPost.clientName }}</td>
-                          </tr>
-                      </tbody>
-                  </table>
-                  <h3>Applicants:</h3>
+          <h1>Applicants for '{{ jobName }}'</h1>
                   <table class="table table-striped">
                     <thead class="table-dark">
                           <tr>
@@ -49,9 +25,9 @@
                               <td>{{ cd.city }}</td>
                               <td>{{ cd.education }}</td>
                               <td>{{ cd.experience }}</td>
-                              <td>{{ cd.hourlyRate }}</td>
+                              <td>{{ cd.hourlyRate }} €</td>
                               <td>
-                              <img :src="'/uploads/' + cd.profileImg" alt="Profile Image">
+                              <img :src="'/uploads/' + cd.profileImg" alt="Profile Image" onerror="this.src='https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png';">
                               </td>
                               <td>
                                 <router-link :to="{name: 'ViewFreelancerProfile', params: {id: cd.freelancerId}}"
@@ -73,9 +49,11 @@ export default {
   data() {
       return {
           jobPost: {},
+          archivedJobPost: {},
           categories: [],
           applicants: [],
-          freelancers: []
+          freelancers: [],
+          jobName: this.$route.params.jobName
       }
   },
   created() {

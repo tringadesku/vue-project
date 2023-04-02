@@ -16,6 +16,7 @@ import ClientProfile from "@/components/ClientDetails/ClientProfile.vue";
 import ViewClientProfile from "@/components/ClientDetails/ViewClientProfile.vue";
 import ListClientDetails from "@/components/Admin/ListClientDetails.vue";
 import AllClients from "@/components/ClientDetails/AllClients.vue";
+import ArchivedJobs from "@/components/ClientDetails/ArchivedJobs.vue";
 
 import CreateFreelancerDetail from "@/components/FreelancerDetails/CreateFreelancerDetail.vue";
 import EditFreelancerDetail from "@/components/FreelancerDetails/EditFreelancerDetail.vue";
@@ -34,7 +35,6 @@ import ListCities from "@/components/Admin/ListCities.vue"
 
 import ActivityLog from "@/components/Admin/ActivityLog.vue"
 import ListFreelancerDetails from "@/components/Admin/ListFreelancerDetails.vue"
-
 
 
 import CreateProject from "@/components/FreelancerProjects/CreateProject.vue";
@@ -87,6 +87,12 @@ const routes = [
     path: "/clientprofile",
     name: "ClientProfile",
     component: ClientProfile,
+    meta: { requiresAuth: true, roles: ['Client']}
+  },
+  {
+    path: "/archivedJobs",
+    name: "ArchivedJobs",
+    component: ArchivedJobs,
     meta: { requiresAuth: true, roles: ['Client']}
   },
   {

@@ -24,10 +24,10 @@
             </div>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="https://publitas.com/wp-content/uploads/2023/01/how-to-amplify-word-of-mouth-marketing-with-online-catalogues.jpg" class="d-block w-100" alt="...">
+                <img src="https://t3.ftcdn.net/jpg/02/33/12/44/360_F_233124436_78mVMPy74gldjeo6rdyJgRklPIGSAwl7.jpg" class="d-block w-100" alt="...">
               </div>
               <div class="carousel-item">
-                <img src="https://t3.ftcdn.net/jpg/02/33/12/44/360_F_233124436_78mVMPy74gldjeo6rdyJgRklPIGSAwl7.jpg" class="d-block w-100" alt="...">
+                <img src="https://publitas.com/wp-content/uploads/2023/01/how-to-amplify-word-of-mouth-marketing-with-online-catalogues.jpg" class="d-block w-100" alt="...">
               </div>
               <div class="carousel-item">
                 <img src="https://images.squarespace-cdn.com/content/v1/5f78e89c7ec702130762b178/1619791419750-OXMONJ7MO1SW0I2FGLIY/JoinOurTeam_Header.jpeg" class="d-block w-100" alt="...">
@@ -59,15 +59,18 @@
               
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title">{{ jobpost.jobPostName }}</h5>
-                    <h6 class="card-title">{{ jobpost.jobCategory }} | {{ jobpost.clientName }}</h6>
+                    <h5 class="card-title" :style="{ fontSize: jobpost.jobPostName.length > 20 ? '10px' : '18px' }">{{ jobpost.jobPostName }}</h5>
+                    <h6 class="card-title" :style="{ paddingBottom: jobpost.clientName.length + jobpost.jobCategory.length < 22 ? '16.5px' : '0' }">{{ jobpost.jobCategory }} | {{ jobpost.clientName }}</h6>
                     <p class="card-text" id="FreelancerDescriptionCss">{{ jobpost.jobPostDescription }}</p>
 
                     <hr class="hr" />
 
                     <div class="d-flex justify-content-between mb-2">
-                                    <div class="p fw-bold">Deadline</div>
-                                    <div class="p">{{ jobpost.jobApplicationDeadline }}</div>
+                               <div class="p fw-bold">Deadline</div>
+                               <div class="row">
+                                    <div class="p text-right">{{ formatDate(jobpost.jobApplicationDeadline) }}</div>
+                                    <div class="p text-right">{{ daysLeft(jobpost.jobApplicationDeadline) }}</div>
+                               </div>
                     </div>
 
                     <hr class="hr" />
@@ -132,15 +135,18 @@
               
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title">{{ job.jobPostName }}</h5>
-                    <h6 class="card-title">{{ job.jobCategory }} | {{ job.clientName }}</h6>
+                    <h5 class="card-title" :style="{ fontSize: job.jobPostName.length > 20 ? '10px' : '18px' }">{{ job.jobPostName }}</h5>
+                    <h6 class="card-title" :style="{ paddingBottom: job.clientName.length + job.jobCategory.length < 22 ? '16.5px' : '0' }">{{ job.jobCategory }} | {{ job.clientName }}</h6>
                     <p class="card-text" id="FreelancerDescriptionCss">{{ job.jobPostDescription }}</p>
 
                     <hr class="hr" />
 
                     <div class="d-flex justify-content-between mb-2">
                                     <div class="p fw-bold">Deadline</div>
-                                    <div class="p">{{ job.jobApplicationDeadline }}</div>
+                                    <div class="row">
+                                    <div class="p text-right">{{ formatDate(job.jobApplicationDeadline) }}</div>
+                                    <div class="p text-right">{{ daysLeft(job.jobApplicationDeadline) }}</div>
+                               </div>
                     </div>
 
                     <hr class="hr" />
@@ -171,51 +177,49 @@
     </div>
 
     <div v-if="userRole == 'Client'">
-      <router-link :to="{name: 'CreateJobPost'}" class="btn btn-success me-2">
+      <router-link :to="{name: 'CreateJobPost'}" class="btn btn-outline-primary w-100 my-4">
         Create New Job Post
       </router-link>
 
+      <div class="d-flex mb-3 justify-content-between align-items-center my-4">
       <h3>Freelancers in JobMatch:</h3>
-      <table class="table table-striped">
-                    <thead class="table-dark">
-                          <tr>
-                              <th>First Name</th>
-                              <th>Last Name</th>
-                              <th>Category</th>
-                              <th>City</th>
-                              <th>Education</th>
-                              <th>Experience</th>
-                              <th>Hourly Rate</th>
-                               <th>Profile Pic</th>
-                              <th></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr v-for="cd in Freelancers" :key="cd._id">
-                              <td>{{ cd.firstName }}</td>
-                              <td>{{ cd.lastName }}</td>
-                              <td>{{ cd.jobCategory }}</td>
-                              <td>{{ cd.city }}</td>
-                              <td>{{ cd.education }}</td>
-                              <td>{{ cd.experience }}</td>
-                              <td>{{ cd.hourlyRate }}</td>
-                              <td>
-                              <img :src="'/uploads/' + cd.profileImg" alt="Profile Image">
-                              </td>
-                              <td>
-                                <router-link :to="{name: 'ViewFreelancerProfile', params: {id: cd.freelancerId}}"
-                                  class="btn btn-success me-2">
-                                      View Profile
-                                  </router-link>
-                              </td>
-                          </tr>
-                      </tbody>
-                  </table>
-
-                  <router-link :to="{name: 'Freelancers'}"
-                                  class="btn btn-success me-2">
+      <router-link :to="{name: 'Freelancers'}"
+                                  class="btn btn-primary me-2">
                                       View All Freelancers >> 
                   </router-link>
+     </div>
+      <div class="card my-3">
+        <div class="card-body">
+            <div class="row gy-3">
+
+                  <div class="col-md-4" v-for="cd in Freelancers" :key="cd._id">
+                            <div class="card">
+                                <div class="card-body">
+
+
+                                  <img :src="'/uploads/' + cd.profileImg" alt="Profile Image" style="width:100px;" onerror="this.src='https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png';">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h3>{{ cd.firstName }} {{ cd.lastName }}</h3>
+                                    </div>
+
+                                    <h5 class="card-title">{{ cd.jobCategory }}, {{ cd.city }}</h5>
+                                    <div class="d-flex justify-content-between mb-2">
+                                            <div class="p fw-semibold">Hourly Rate</div>
+                                            <div class="p">{{ cd.hourlyRate }} €</div>
+                                    </div>
+                                
+                                <router-link :to="{name: 'ViewFreelancerProfile', params: {id: cd.freelancerId}}"
+                                class="btn btn-success w-100">
+                                      View Profile
+                                  </router-link>
+                                </div>
+                            </div>
+                        </div>
+
+
+            </div>
+        </div>
+    </div>
       </div>
       <div v-if="userRole == 'Admin'" class="card my-5">
         <div class="d-flex justify-content-between align-items-center px-3">
@@ -435,7 +439,30 @@ export default{
 
     hasApplied(jobId) {
     return this.JobApplications.some(jobApp => jobApp.jobId === jobId);
-  }
+  },
+
+  formatDate(dateString){
+      const date = new Date(dateString);
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear().toString().substr(-2);
+
+      return `${day}/${month}/${year}`;
+    },
+
+    daysLeft(dateString) {
+        const deadline = new Date(dateString);
+        const now = new Date();
+        const diffTime = Math.abs(deadline - now);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays >= 1) {
+          return `${diffDays} day${diffDays > 1 ? 's' : ''} left`;
+        } 
+
+    },
+
+
 }
 }
 
